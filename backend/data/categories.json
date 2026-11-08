@@ -2,12 +2,12 @@
   {
     "id": "all",
     "name": "All Products",
-    "count": 46
+    "count": 48
   },
   {
     "id": "hand-tools",
     "name": "Hand Tools",
-    "count": 26
+    "count": 28
   },
   {
     "id": "power-tools",

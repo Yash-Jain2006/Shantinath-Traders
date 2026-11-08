@@ -1,5 +1,74 @@
 [
   {
+    "id": "c-f-clamps",
+    "name": "C & F Clamps",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "",
+    "variants": "",
+    "material": "",
+    "finish": "",
+    "features": [],
+    "suitableFor": "",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "",
+    "image": "/images/products/c-f-clamps.png"
+  },
+  {
+    "id": "pipe-chain-pipe-wrenches",
+    "name": "Pipe & Chain Pipe Wrenches",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "10\", 12\", 14\", 18\" | 35\", 40\", 50\"",
+    "variants": "",
+    "material": "",
+    "finish": "",
+    "features": [],
+    "suitableFor": "",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "",
+    "image": "/images/products/pipe-chain-pipe-wrenches.png"
+  },
+  {
+    "id": "sockets-its-accessories",
+    "name": "Sockets & its Accessories",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "4-32mm",
+    "variants": "Square Drive, Short, Long, Hex-Bit, Torex-Bit, Impact Socket",
+    "material": "",
+    "finish": "",
+    "features": [
+      "Includes:",
+      "Ratchet Handle | Flexible Handle | T-Handle",
+      "Extension Bar",
+      "Universal Joint"
+    ],
+    "suitableFor": "",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "",
+    "image": "/images/products/sockets-its-accessories.png"
+  },
+  {
+    "id": "bit-driver-set",
+    "name": "Bit Driver Set",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "",
+    "variants": "",
+    "material": "",
+    "finish": "",
+    "features": [],
+    "suitableFor": "",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "",
+    "image": "/images/products/bit-driver-set.png"
+  },
+  {
     "id": "screwdriver-sets",
     "name": "Screwdriver Sets",
     "brand": "Taparia | PYE",
@@ -100,41 +169,23 @@
   },
   {
     "id": "taparia-line-testers",
-    "name": "Testers & Line Tester",
+    "name": "Testers",
     "brand": "Taparia",
     "category": "hand-tools",
-    "sizes": "Compact pocket model with clip (100V – 500V AC)",
-    "material": "Unbreakable transparent insulating resin with brass touch point",
+    "sizes": "",
+    "material": "",
     "finish": "Bright glowing safety neon indicator",
     "features": [
       "Instant check whether a wall socket or switch is live and safe",
-      "Essential safety tool for every home in Jhansi",
+      "Essential safety tool",
       "Pocket clip to carry easily during household checks"
     ],
     "suitableFor": "Testing home plug points, switchboards, extension cords, inverters",
     "inStock": true,
     "featured": false,
-    "imageSnippet": "Translucent yellow electrician neon testers lined up in shop display.",
-    "image": "/images/products/taparia-line-testers.jpg"
-  },
-  {
-    "id": "taparia-allen-key-set",
-    "name": "Taparia Folding Hex Key / Allen Wrench Set",
-    "brand": "Taparia",
-    "category": "hand-tools",
-    "sizes": "9 Pcs Set (1.5mm to 10mm in compact green box)",
-    "material": "Hardened spring-alloy steel with rust-resistant black finish",
-    "finish": "Anti-corrosion oiled finish",
-    "features": [
-      "Fits modular furniture (beds, study tables, chairs, gym equipment)",
-      "Chamfered ends slip effortlessly into hex screws without stripping",
-      "Compact box prevents losing individual keys"
-    ],
-    "suitableFor": "Assembling DIY furniture, tightening bicycles, ceiling fan brackets",
-    "inStock": true,
-    "featured": false,
-    "imageSnippet": "Taparia Allen key set in custom emerald green clip holder.",
-    "image": "/images/products/taparia-allen-key-set.jpg"
+    "imageSnippet": "",
+    "image": "/images/products/taparia-line-testers.png",
+    "variants": "Line, Two-in-one, Digital"
   },
   {
     "id": "pye-wire-stripper",
@@ -625,10 +676,10 @@
   },
   {
     "id": "taparia-sa46-socket-set",
-    "name": "Taparia 1/4\" Dr. 46 Pcs Socket & Bit Set (SA 46 in Hard Case)",
+    "name": "Taparia 1/4\" Dr. 46 Pcs Socket & Bit Set",
     "brand": "Taparia",
     "category": "hand-tools",
-    "sizes": "46 Pieces Complete Kit (Sockets 4mm to 14mm + Torx/Hex/Phillips Bits + Ratchet)",
+    "sizes": "",
     "material": "Chrome Vanadium Steel (Cr-V) with hardened quick-release 72T ratchet",
     "finish": "Mirror chrome finish in heavy-duty custom blow-moulded blue case",
     "features": [
@@ -639,32 +690,12 @@
     ],
     "suitableFor": "Automobile mechanics, bike engine servicing, modular kitchen fittings, home appliances",
     "inStock": true,
-    "featured": true,
-    "image": "/images/products/taparia-sa46-socket-set.jpg",
-    "imageSnippet": "Taparia SA 46 blow-moulded blue case with comprehensive socket collection.",
-    "hsnCode": "82042000",
-    "mrp": 2622
-  },
-  {
-    "id": "taparia-s38h-socket-set",
-    "name": "Taparia 3/8\" Dr. Socket Set (S 3/8 H - 20 Pcs in Steel Box)",
-    "brand": "Taparia",
-    "category": "hand-tools",
-    "sizes": "20 Pieces (14 Sockets 6mm to 22mm + Spark Plug Socket + 6 Accessories)",
-    "material": "Cold-forged Chrome Vanadium steel with flank drive profile",
-    "finish": "Bright chrome plated in heavy steel carrying case",
-    "features": [
-      "14 Flank Drive Sockets: 6, 7, 8, 9, 10, 11, 12, 13, 14, 17, 19, 21, 22mm",
-      "Includes dedicated Spark Plug Socket BSP21 for two-wheelers and tractors",
-      "Heavy duty reversible ratchet, extension bars, and universal joint"
-    ],
-    "suitableFor": "Two-wheeler mechanics, generator repair, tractor maintenance in Jhansi region",
-    "inStock": true,
     "featured": false,
-    "image": "/images/products/taparia-s38h-socket-set.jpg",
-    "imageSnippet": "Taparia S 3/8 H socket set in red industrial metal box.",
+    "image": "/images/products/taparia-sa46-socket-set.jpg",
+    "imageSnippet": "",
     "hsnCode": "82042000",
-    "mrp": 3568
+    "mrp": 2622,
+    "variants": ""
   },
   {
     "id": "taparia-dep-spanners-chrome",
@@ -674,19 +705,15 @@
     "sizes": "DEP 06 (6x7 to 16x17mm), DEP 08 (6x7 to 20x22mm), DEP 12 (6x7 to 30x32mm)",
     "material": "Drop forged high grade chrome vanadium alloy steel",
     "finish": "Mirror Nickel Chrome Plating (IS 2028-2026)",
-    "features": [
-      "Conforming to IS 2028-2026 | HSN: 82041110",
-      "Precision broached jaw profile fits hex nuts with tight non-slip tolerances",
-      "Slim head profile allows working in recessed and cramped spaces",
-      "Available individually or in matched sets (DEP 06, DEP 08, DEP 12)"
-    ],
+    "features": [],
     "suitableFor": "Vehicle maintenance, water pump fitting, pipe flanges, home furniture assembly",
     "inStock": true,
-    "featured": true,
+    "featured": false,
     "image": "/images/products/taparia-dep-spanners-chrome.jpg",
-    "imageSnippet": "Taparia double ended open jaw chrome spanner rack.",
+    "imageSnippet": "",
     "hsnCode": "82041110",
-    "mrp": 625
+    "mrp": 625,
+    "variants": ""
   },
   {
     "id": "taparia-ring-spanners-1808",
@@ -704,7 +731,7 @@
     ],
     "suitableFor": "Heavy machinery bolts, engine head bolts, vehicle leaf springs and suspensions",
     "inStock": true,
-    "featured": true,
+    "featured": false,
     "image": "/images/products/taparia-ring-spanners-1808.jpg",
     "imageSnippet": "Taparia deep offset ring spanners hanging in roll pouch.",
     "hsnCode": "82041110",
@@ -725,7 +752,7 @@
     ],
     "suitableFor": "Auto workshops, fabrication units, home DIY toolkits",
     "inStock": true,
-    "featured": true,
+    "featured": false,
     "image": "/images/products/taparia-combination-spanners-cs.jpg",
     "imageSnippet": "Taparia CS series combination spanner set displayed in metal rack.",
     "hsnCode": "82041110",
