@@ -2,7 +2,7 @@
   {
     "id": "all",
     "name": "All Products",
-    "count": 51
+    "count": 50
   },
   {
     "id": "hand-tools",
@@ -17,7 +17,7 @@
   {
     "id": "paints",
     "name": "Paints & Enamels",
-    "count": 5
+    "count": 4
   },
   {
     "id": "locks",

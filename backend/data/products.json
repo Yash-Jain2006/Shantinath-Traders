@@ -474,25 +474,6 @@
     "image": "/images/products/red-oxide-primer.jpg"
   },
   {
-    "id": "aerosol-spray-paints",
-    "name": "Quick-Dry DIY Aerosol Spray Paint Cans",
-    "brand": "Aerol / Bosny / Zorrik",
-    "category": "paints",
-    "sizes": "400ml Easy-Spray Can with fine-mist nozzle",
-    "material": "Fast-drying acrylic spray lacquer",
-    "finish": "Metallic Gold, Chrome Silver, Matte Black, Gloss White, Clear Coat",
-    "features": [
-      "No brush, no thinner, no mess — just shake and spray!",
-      "Dries completely in 15 minutes with a factory-smooth finish",
-      "Perfect for small touch-ups on cars, bikes, vases, and home decor"
-    ],
-    "suitableFor": "Bike touch-ups, repainting alloy wheels, plastic planters, craft projects, metal handles",
-    "inStock": true,
-    "featured": true,
-    "imageSnippet": "Colorful spray cans arranged neatly on upper showcase shelf.",
-    "image": "/images/products/aerosol-spray-paints.jpg"
-  },
-  {
     "id": "industrial-paint-thinners",
     "name": "Premium Paint Thinner & Brush Cleaner",
     "brand": "Pure Blend",
@@ -682,10 +663,10 @@
   },
   {
     "id": "apollo-cutting-wheels",
-    "name": "Apollo & Akari 4\" Thin Metal Cutting Wheels",
-    "brand": "Apollo / Akari",
+    "name": "Thin Metal Cutting Wheels",
+    "brand": "Akari",
     "category": "abrasives",
-    "sizes": "4\" (105mm x 1.2mm)",
+    "sizes": "4\", 5\"",
     "material": "Double fiberglass reinforced disc",
     "finish": "Thin precision cutting edge",
     "features": [
@@ -696,7 +677,8 @@
     "inStock": true,
     "featured": false,
     "imageSnippet": "Boxes of Apollo and Akari cutting discs visible on right metal rack.",
-    "image": "/images/products/apollo-cutting-wheels.jpg"
+    "image": "/images/products/apollo-cutting-wheels.jpg",
+    "variants": ""
   },
   {
     "id": "taparia-1170-adj-wrench-chrome",
