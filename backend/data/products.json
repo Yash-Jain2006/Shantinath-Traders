@@ -473,7 +473,7 @@
   {
     "id": "brass-padlocks-collection",
     "name": "Solid Brass High-Security Padlocks (Harrison / Godrej / Link)",
-    "brand": "Harrison / Godrej / Link",
+    "brand": "Godrej / Link",
     "category": "locks",
     "sizes": "40mm, 50mm, 60mm, 70mm (3 or 4 brass keys included)",
     "material": "100% Solid Brass body with hardened boron steel shackle",
@@ -487,7 +487,8 @@
     "inStock": true,
     "featured": true,
     "imageSnippet": "Rows of padlocks hanging neatly on glass wall showcase.",
-    "image": "/images/products/brass-padlocks-collection.jpg"
+    "image": "/images/products/brass-padlocks-collection.jpg",
+    "variants": ""
   },
   {
     "id": "architectural-hardware-fittings",
