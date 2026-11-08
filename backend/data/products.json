@@ -434,11 +434,11 @@
   },
   {
     "id": "industrial-paint-thinners",
-    "name": "Premium Paint Thinner & Brush Cleaner",
-    "brand": "Pure Blend",
+    "name": "Paint Tarpin & Thinner",
+    "brand": "-",
     "category": "paints",
-    "sizes": "500ml, 1 Litre, 5 Litres",
-    "material": "Refined solvent blend",
+    "sizes": "180ml, 400ml, 700ml, 1L",
+    "material": "",
     "finish": "Clear fast-drying solvent",
     "features": [
       "Thins oil paints and enamels for smooth brush gliding without brush strokes",
@@ -447,8 +447,9 @@
     "suitableFor": "Diluting enamel paints, cleaning painting brushes, removing paint spills from floor",
     "inStock": true,
     "featured": false,
-    "imageSnippet": "Solvent containers and bottles on bottom inventory shelf.",
-    "image": "/images/products/industrial-paint-thinners.jpg"
+    "imageSnippet": "",
+    "image": "/images/products/industrial-paint-thinners.jpg",
+    "variants": ""
   },
   {
     "id": "harrison-shutter-lock",
