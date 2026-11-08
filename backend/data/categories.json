@@ -1,0 +1,42 @@
+[
+  {
+    "id": "all",
+    "name": "All Products",
+    "count": 50
+  },
+  {
+    "id": "hand-tools",
+    "name": "Hand Tools",
+    "count": 30
+  },
+  {
+    "id": "power-tools",
+    "name": "Machine & Power Tools",
+    "count": 5
+  },
+  {
+    "id": "paints",
+    "name": "Paints & Enamels",
+    "count": 5
+  },
+  {
+    "id": "locks",
+    "name": "Pad Locks",
+    "count": 3
+  },
+  {
+    "id": "adhesives",
+    "name": "Adhesives & Sprays",
+    "count": 3
+  },
+  {
+    "id": "garden",
+    "name": "Gardening & Pipes",
+    "count": 2
+  },
+  {
+    "id": "abrasives",
+    "name": "Pipe Fittings",
+    "count": 2
+  }
+]

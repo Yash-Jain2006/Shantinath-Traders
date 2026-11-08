@@ -1,0 +1,949 @@
+export const products = [
+  {
+    "id": "taparia-pliers-set",
+    "name": "Combination Pliers",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "165mm, 185mm, 210mm",
+    "material": "",
+    "finish": "",
+    "features": [
+      "Insulated handles for complete electrical safety at home",
+      "Sharp hardened wire cutting edge and serrated grip",
+      "Comfortable anti-slip grip that doesn't hurt your hands"
+    ],
+    "suitableFor": "Home electrical repair, wire cutting, gripping stuck nails and bolts",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Insulated Taparia combination pliers",
+    "image": "/images/products/taparia-pliers-set.jpg"
+  },
+  {
+    "id": "taparia-screwdrivers",
+    "name": "Taparia Precision Screwdriver Set & Testers",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "Flat & Phillips (PH0, PH1, PH2, Stubby, Long Shank)",
+    "material": "Hardened alloy steel with magnetized screw-holding tips",
+    "finish": "Comfortable shatter-proof yellow/green acetate handles",
+    "features": [
+      "Strong magnetic tip prevents dropping small screws inside appliances",
+      "Ergonomic handle for easy twisting without hand strain",
+      "Includes electrical line tester with neon glowing bulb"
+    ],
+    "suitableFor": "Fixing wall switches, fan regulators, kitchen appliances, toys, and electronics",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Array of green and yellow cellulose acetate handled Taparia screwdrivers.",
+    "image": "/images/products/taparia-screwdrivers.jpg"
+  },
+  {
+    "id": "taparia-line-testers",
+    "name": "Testers & Line Tester",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "Compact pocket model with clip (100V \u2013 500V AC)",
+    "material": "Unbreakable transparent insulating resin with brass touch point",
+    "finish": "Bright glowing safety neon indicator",
+    "features": [
+      "Instant check whether a wall socket or switch is live and safe",
+      "Essential safety tool for every home in Jhansi",
+      "Pocket clip to carry easily during household checks"
+    ],
+    "suitableFor": "Testing home plug points, switchboards, extension cords, inverters",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Translucent yellow electrician neon testers lined up in shop display.",
+    "image": "/images/products/taparia-line-testers.jpg"
+  },
+  {
+    "id": "taparia-allen-key-set",
+    "name": "Taparia Folding Hex Key / Allen Wrench Set",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "9 Pcs Set (1.5mm to 10mm in compact green box)",
+    "material": "Hardened spring-alloy steel with rust-resistant black finish",
+    "finish": "Anti-corrosion oiled finish",
+    "features": [
+      "Fits modular furniture (beds, study tables, chairs, gym equipment)",
+      "Chamfered ends slip effortlessly into hex screws without stripping",
+      "Compact box prevents losing individual keys"
+    ],
+    "suitableFor": "Assembling DIY furniture, tightening bicycles, ceiling fan brackets",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Taparia Allen key set in custom emerald green clip holder.",
+    "image": "/images/products/taparia-allen-key-set.jpg"
+  },
+  {
+    "id": "pye-wire-stripper",
+    "name": "PYE Easy Wire Stripper & Cutter (Model 950)",
+    "brand": "PYE",
+    "category": "hand-tools",
+    "sizes": "Universal gauge (0.5 to 6 sq mm)",
+    "material": "Carbon steel with blue spring-cushioned handles",
+    "finish": "Powder-coated with blue spring return cushion handles",
+    "features": [
+      "Clean wire stripping in one squeeze without cutting inner copper strands",
+      "Spring-loaded mechanism makes home wiring fast and effortless",
+      "Integrated cutting blade"
+    ],
+    "suitableFor": "Installing lighting fixtures, home speakers, inverter batteries",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "PYE 950 wire stripper in blister packaging visible on front counter.",
+    "image": "/images/products/pye-wire-stripper.jpg"
+  },
+  {
+    "id": "apollo-tap-die-set",
+    "name": "Apollo Precision Threading Taps & Calipers",
+    "brand": "Apollo / A-Power",
+    "category": "hand-tools",
+    "sizes": "M3 \u2013 M16 Taps, Adjustable Tap Wrenches, Calipers",
+    "material": "High-Speed Tool Steel",
+    "finish": "Polished ground finish",
+    "features": [
+      "Re-threads damaged or rusted bolt holes in vehicles and machinery",
+      "Spring calipers for taking exact measurements around the house"
+    ],
+    "suitableFor": "Home workshops, bike restoration, DIY metal crafting",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Apollo tap wrench, threading dies, and calipers displayed on upper tool rack.",
+    "image": "/images/products/apollo-tap-die-set.jpg"
+  },
+  {
+    "id": "bosch-impact-drill",
+    "name": "Bosch Professional All-Round Home Impact Drill",
+    "brand": "Bosch",
+    "category": "power-tools",
+    "sizes": "10mm / 13mm Chuck with Depth Gauge & Key",
+    "material": "Reinforced housing with ball-bearing smooth motor",
+    "finish": "Bosch Blue signature finish",
+    "features": [
+      "Effortlessly drills into concrete walls, brick, wood, and metal",
+      "Dual mode: Normal drilling or hammer impact for masonry walls",
+      "Forward/reverse switch for driving screws into wood and wall plugs"
+    ],
+    "suitableFor": "Hanging photo frames, wall shelves, curtains, clocks, TV mounts, and kitchen racks",
+    "inStock": true,
+    "featured": true,
+    "imageSnippet": "Bosch professional power tool cartons on upper display.",
+    "image": "/images/products/bosch-impact-drill.jpg"
+  },
+  {
+    "id": "ingco-cordless-kit",
+    "name": "Ingco Cordless Drill & Screwdriver Kit (with Hard Case)",
+    "brand": "Ingco",
+    "category": "power-tools",
+    "sizes": "12V & 20V Lithium-Ion Battery Platform",
+    "material": "Lightweight ergonomic rubber-grip casing",
+    "finish": "Ingco Industrial Orange",
+    "features": [
+      "No annoying power cords \u2014 carry anywhere inside or outside the house",
+      "Built-in bright LED light for working inside dark cabinets and corners",
+      "Includes rechargeable battery, rapid charger, and popular screwdriver bits"
+    ],
+    "suitableFor": "Curtain rods, modular kitchen fixes, tightening door hinges, DIY woodwork",
+    "inStock": true,
+    "featured": true,
+    "imageSnippet": "Ingco bright orange tool cases placed prominently on front counter.",
+    "image": "/images/products/ingco-cordless-kit.jpg"
+  },
+  {
+    "id": "kobmax-electric-drill",
+    "name": "Kobmax Compact Home Electric Drill (KX12 350W)",
+    "brand": "Kobmax",
+    "category": "power-tools",
+    "sizes": "10mm (3/8\") Chuck, 350W Motor",
+    "material": "Compact lightweight body",
+    "finish": "Bright Yellow finish",
+    "features": [
+      "Lightweight and easy to handle for simple home drilling",
+      "Continuous run lock-on button so your finger doesn't get tired",
+      "Very budget-friendly for casual home repair"
+    ],
+    "suitableFor": "Drilling into wood, plastic, sheet metal, and soft brick",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Kobmax yellow box on glass showcase shelf.",
+    "image": "/images/products/kobmax-electric-drill.jpg"
+  },
+  {
+    "id": "kobmax-electric-blower",
+    "name": "Kobmax High-Power Electric Air Blower (KX05 500W)",
+    "brand": "Kobmax",
+    "category": "power-tools",
+    "sizes": "500W high-velocity air motor with rubber nozzle",
+    "material": "Sturdy heat-resistant housing",
+    "finish": "Vibrant yellow with detachable dust bag",
+    "features": [
+      "Blows out deep dust from ACs, computer PCs, cars, and sofa crevices",
+      "Can also be used as a light vacuum with included bag",
+      "Powerful airflow cleans dry leaves and porch dust in minutes"
+    ],
+    "suitableFor": "Cleaning AC outdoor units, computers, cars, porch, and workshop dust",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Kobmax blower box displayed in shop showcase.",
+    "image": "/images/products/kobmax-electric-blower.jpg"
+  },
+  {
+    "id": "xtra-power-hammer-drill",
+    "name": "Xtra-Power Rotary Heavy Hammer Drill (PT435)",
+    "brand": "Xtra-Power",
+    "category": "power-tools",
+    "sizes": "26mm SDS-Plus with Chisel & Drill Bits",
+    "material": "High impact industrial alloy gearbox",
+    "finish": "Red & Black heavy-duty body",
+    "features": [
+      "Heavy hammering power for concrete slab drilling and wall chasing",
+      "Includes heavy carry case and SDS bits"
+    ],
+    "suitableFor": "Home renovation, wall chasing for concealed wiring, bathroom tiling",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Xtra-Power heavy red box atop the main industrial rack.",
+    "image": "/images/products/xtra-power-hammer-drill.jpg"
+  },
+  {
+    "id": "apcolite-gloss-enamel",
+    "name": "Asian Paints Apcolite Premium Gloss Enamel",
+    "brand": "Asian Paints",
+    "category": "paints",
+    "sizes": "500ml, 1 Litre, 4 Litre Tins (All favorite home colors)",
+    "material": "High-gloss protective alkyd enamel",
+    "finish": "Mirror-shine washable finish (Pure White, Off-white, Brown, Green, etc.)",
+    "features": [
+      "Washable mirror gloss that wipes clean easily from fingerprints and oil",
+      "Protects iron grills and balcony railings from rust during rainy seasons",
+      "Beautiful rich shine on wooden doors and window frames"
+    ],
+    "suitableFor": "Main entrance gates, balcony grills, wooden doors, window frames, metal furniture",
+    "inStock": true,
+    "featured": true,
+    "imageSnippet": "Rows of genuine Apcolite tins stacked neatly across middle rack shelves.",
+    "image": "/images/products/apcolite-gloss-enamel.jpg"
+  },
+  {
+    "id": "super-synthetic-enamel",
+    "name": "Super Synthetic Enamel for Gates, Grills & Furniture",
+    "brand": "Asian Paints / Shalimar",
+    "category": "paints",
+    "sizes": "500ml, 1 Litre, 4 Litre Tins",
+    "material": "Quick drying synthetic enamel",
+    "finish": "Vibrant rich colors (Black, Bus Green, Phirozi, Golden Yellow, Signal Red)",
+    "features": [
+      "Fast drying so you can finish painting your gate in one afternoon",
+      "High coverage per tin \u2014 great value for home beautification",
+      "Weather-resistant shine that doesn't fade under the Jhansi sun"
+    ],
+    "suitableFor": "Iron gates, steel almirahs, coolers, window coolers, railings",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Super Synthetic Enamel cans lined up with crisp factory labels.",
+    "image": "/images/products/super-synthetic-enamel.jpg"
+  },
+  {
+    "id": "red-oxide-primer",
+    "name": "Anti-Rust Red Oxide Primer for Metal Surfaces",
+    "brand": "Asian Paints / Master Primers",
+    "category": "paints",
+    "sizes": "1 Litre, 4 Litre Tins",
+    "material": "Zinc chromate anti-corrosive base primer",
+    "finish": "Smooth matte rust-preventive coat",
+    "features": [
+      "Apply directly on rusted or new iron before painting to prevent peeling",
+      "Stops rust from eating away your coolers and metal railings",
+      "Provides smooth adhesion for your topcoat paint"
+    ],
+    "suitableFor": "Water coolers, window grills, iron doors, metal staircases",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Primer cans positioned on lower shelf for fabrication contractors.",
+    "image": "/images/products/red-oxide-primer.jpg"
+  },
+  {
+    "id": "aerosol-spray-paints",
+    "name": "Quick-Dry DIY Aerosol Spray Paint Cans",
+    "brand": "Aerol / Bosny / Zorrik",
+    "category": "paints",
+    "sizes": "400ml Easy-Spray Can with fine-mist nozzle",
+    "material": "Fast-drying acrylic spray lacquer",
+    "finish": "Metallic Gold, Chrome Silver, Matte Black, Gloss White, Clear Coat",
+    "features": [
+      "No brush, no thinner, no mess \u2014 just shake and spray!",
+      "Dries completely in 15 minutes with a factory-smooth finish",
+      "Perfect for small touch-ups on cars, bikes, vases, and home decor"
+    ],
+    "suitableFor": "Bike touch-ups, repainting alloy wheels, plastic planters, craft projects, metal handles",
+    "inStock": true,
+    "featured": true,
+    "imageSnippet": "Colorful spray cans arranged neatly on upper showcase shelf.",
+    "image": "/images/products/aerosol-spray-paints.jpg"
+  },
+  {
+    "id": "industrial-paint-thinners",
+    "name": "Premium Paint Thinner & Brush Cleaner",
+    "brand": "Pure Blend",
+    "category": "paints",
+    "sizes": "500ml, 1 Litre, 5 Litres",
+    "material": "Refined solvent blend",
+    "finish": "Clear fast-drying solvent",
+    "features": [
+      "Thins oil paints and enamels for smooth brush gliding without brush strokes",
+      "Cleans paint brushes, rollers, and stained hands effortlessly"
+    ],
+    "suitableFor": "Diluting enamel paints, cleaning painting brushes, removing paint spills from floor",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Solvent containers and bottles on bottom inventory shelf.",
+    "image": "/images/products/industrial-paint-thinners.jpg"
+  },
+  {
+    "id": "harrison-shutter-lock",
+    "name": "Harrison JAMA Heavy-Duty Shutter & Gate Lock (75mm)",
+    "brand": "Harrison",
+    "category": "locks",
+    "sizes": "75mm & 90mm solid hardened body",
+    "material": "Drop-forged hardened special steel",
+    "finish": "Bright chrome weather-resistant casing",
+    "features": [
+      "Maximum anti-theft security for home shopfronts and rolling shutters",
+      "Anti-drill, anti-saw, and anti-cut hardened steel shackle",
+      "Supplied with computerized high-security dimple keys"
+    ],
+    "suitableFor": "Shopfront shutters, godown gates, main residential iron gates",
+    "inStock": true,
+    "featured": true,
+    "imageSnippet": "Harrison 75mm Shutter Lock packaging in bottom glass counter box.",
+    "image": "/images/products/harrison-shutter-lock.jpg"
+  },
+  {
+    "id": "brass-padlocks-collection",
+    "name": "Solid Brass High-Security Padlocks (Harrison / Godrej / Link)",
+    "brand": "Harrison / Godrej / Link",
+    "category": "locks",
+    "sizes": "40mm, 50mm, 60mm, 70mm (3 or 4 brass keys included)",
+    "material": "100% Solid Brass body with hardened boron steel shackle",
+    "finish": "Golden satin brass & chrome finishes",
+    "features": [
+      "Never rusts or jams even when exposed to outdoor monsoon rain",
+      "Precision pin-tumbler mechanism resists lock-picking",
+      "Double locking shackle withstands heavy hammer strikes"
+    ],
+    "suitableFor": "Main house doors, terrace gates, luggage, storage rooms, electrical panels",
+    "inStock": true,
+    "featured": true,
+    "imageSnippet": "Rows of padlocks hanging neatly on glass wall showcase.",
+    "image": "/images/products/brass-padlocks-collection.jpg"
+  },
+  {
+    "id": "architectural-hardware-fittings",
+    "name": "Stainless Steel Door Aldrops, Latches, Bolts & Hinges",
+    "brand": "Classic Hardware",
+    "category": "locks",
+    "sizes": "Aldrops (10\", 12\"), Tower Bolts (4\" to 10\"), Stainless Steel Hinges",
+    "material": "Rust-proof Stainless Steel (SS 304 / SS 202)",
+    "finish": "Modern Brushed Satin & Chrome Mirror finish",
+    "features": [
+      "Smooth silent sliding action with heavy solid pins",
+      "Elegant design elevates bedroom and entrance doors",
+      "Resistant to moisture and weather corrosion"
+    ],
+    "suitableFor": "Bedroom doors, bathroom doors, almirahs, wooden cabinets",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Steel aldrop fittings and door hardware displayed in counter tray.",
+    "image": "/images/products/architectural-hardware-fittings.jpg"
+  },
+  {
+    "id": "wd40-rust-remover",
+    "name": "WD-40 Multi-Use Rust Penetrant & Squeak Remover",
+    "brand": "WD-40",
+    "category": "adhesives",
+    "sizes": "32g, 64g, 420ml Smart Straw Can",
+    "material": "All-in-one penetrating lubricant & moisture displacer",
+    "finish": "Convenient spray can with precision nozzle",
+    "features": [
+      "Silences annoying squeaky door hinges in seconds",
+      "Loosens jammed screws, rusted locks, and stuck water taps",
+      "Removes sticky tape residue, chewing gum, and stains from tiles",
+      "Displaces moisture from bike spark plugs during monsoon start problems"
+    ],
+    "suitableFor": "Squeaky doors, jammed locks, bike chains, rusted garden shears, sticky sticker residues",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "WD-40 blue and yellow cans showcased on the wall display.",
+    "image": "/images/products/wd40-rust-remover.jpg"
+  },
+  {
+    "id": "fevicol-heatx-araldite",
+    "name": "Fevicol HeatX, Araldite Epoxy & M-Seal Home Pack",
+    "brand": "Fevicol / Pidilite / Araldite",
+    "category": "adhesives",
+    "sizes": "Small tubes (10g, 50g) to 1 Litre cans",
+    "material": "Instant bond contact adhesives & high-strength epoxy",
+    "finish": "Fast-curing industrial strength",
+    "features": [
+      "Fevicol HeatX fixes peeling table laminates and shoes with instant grip",
+      "Araldite fixes broken ceramic cups, marble statues, glass, and metal",
+      "M-Seal stops leaking water pipes and taps in 30 minutes without a plumber"
+    ],
+    "suitableFor": "Fixing loose laminates, repairing broken ceramic/glass, emergency pipe leak sealing",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Fevicol HeatX and Araldite tubes placed on display shelf.",
+    "image": "/images/products/fevicol-heatx-araldite.jpg"
+  },
+  {
+    "id": "zorrik-motomax-lubricants",
+    "name": "Motomax Chain Lube & Zorrik 88 Multi-Spray",
+    "brand": "Motomax / Zorrik",
+    "category": "adhesives",
+    "sizes": "100ml, 250ml Cans",
+    "material": "High-cling synthetic chain lubricant",
+    "finish": "Aerosol spray",
+    "features": [
+      "Keeps motorcycle and bicycle chains running smooth and noise-free",
+      "Repels road dust and water, extending chain life by thousands of kilometers"
+    ],
+    "suitableFor": "Motorcycle chains, bicycles, treadmill belts, sliding door tracks",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Zorrik and Motomax cans displayed side by side in glass cabinet.",
+    "image": "/images/products/zorrik-motomax-lubricants.jpg"
+  },
+  {
+    "id": "pvc-braided-garden-hose",
+    "name": "Flexible PVC Braided Garden & Car Wash Hose Pipes",
+    "brand": "Kisan Gold / Supreme",
+    "category": "garden",
+    "sizes": "1/2\" & 3/4\" inner diameter (Custom meter lengths: 10m, 20m, 30m rolls)",
+    "material": "Virgin transparent PVC with high-strength polyester braiding",
+    "finish": "Bright Green, Yellow, Orange striped transparent finish",
+    "features": [
+      "Does not kink, crack, or twist when dragging across the garden or driveway",
+      "Withstands hot sun and high tap water pressure without bursting",
+      "Crystal-clear visible water flow; available cut to your exact needed length!"
+    ],
+    "suitableFor": "Watering garden plants, washing cars/bikes, cleaning porches, cooler water filling",
+    "inStock": true,
+    "featured": true,
+    "imageSnippet": "Bright green, yellow, and orange hose bundles stacked by the store entrance.",
+    "image": "/images/products/pvc-braided-garden-hose.jpg"
+  },
+  {
+    "id": "gi-wire-mesh-jali",
+    "name": "Galvanized Wire Netting / Mosquito & Window Mesh (Jali)",
+    "brand": "Tata Wiron / Premium GI",
+    "category": "garden",
+    "sizes": "Width 3ft, 4ft, 5ft (Sold by running meter or full roll)",
+    "material": "Hot-dip galvanized zinc coated steel wire",
+    "finish": "Rust-proof bright silver mesh",
+    "features": [
+      "Prevents mosquitoes, pigeons, rats, and bugs from entering open windows",
+      "Rust-proof zinc coating lasts years in outdoor rain and sun",
+      "Easily tacked onto wooden or aluminum window frames"
+    ],
+    "suitableFor": "Balcony bird netting, window mosquito mesh, plant fencing, pet cages",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Galvanized wire mesh rolls standing by the warehouse rack.",
+    "image": "/images/products/gi-wire-mesh-jali.jpg"
+  },
+  {
+    "id": "abrasive-emery-sandpaper",
+    "name": "Waterproof Sandpaper / Emery Paper Sheets (Assorted Grits)",
+    "brand": "JK Files / Deer",
+    "category": "abrasives",
+    "sizes": "Grit P80 (Coarse) to P400 (Ultra Smooth Polish)",
+    "material": "Silicon carbide abrasive on flexible waterproof paper",
+    "finish": "Flexible latex backing",
+    "features": [
+      "Smooths down rough wood, removes old flaking paint and rust",
+      "Essential first step before repainting your doors, window coolers, or gates"
+    ],
+    "suitableFor": "Preparing wood before polish, smoothing gate rust before paint, car scratch buffing",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Rolls and sheets of abrasive sandpaper on bottom shelf.",
+    "image": "/images/products/abrasive-emery-sandpaper.jpg"
+  },
+  {
+    "id": "apollo-cutting-wheels",
+    "name": "Apollo & Akari 4\" Thin Metal Cutting Wheels",
+    "brand": "Apollo / Akari",
+    "category": "abrasives",
+    "sizes": "4\" (105mm x 1.2mm)",
+    "material": "Double fiberglass reinforced disc",
+    "finish": "Thin precision cutting edge",
+    "features": [
+      "Clean razor cuts through steel pipes, rods, and curtain tracks",
+      "Safe double fiberglass mesh construction"
+    ],
+    "suitableFor": "Cutting curtain pipes, metal rods, trimming steel bolts",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "Boxes of Apollo and Akari cutting discs visible on right metal rack.",
+    "image": "/images/products/apollo-cutting-wheels.jpg"
+  },
+  {
+    "id": "taparia-1170-adj-wrench-chrome",
+    "name": "Adjustable Wrenches ",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "150mm, 200mm, 250mm, 300mm, 375mm",
+    "material": "Drop forged high grade carbon steel, Type A Grade II",
+    "finish": "",
+    "features": [
+      "Generally conforming to IS 6149-2025 Type A Grade II",
+      "Precision-machined rack and knurl for smooth effortless jaw opening"
+    ],
+    "suitableFor": "Home plumbing, sanitary pipe fittings, bicycle and two-wheeler maintenance",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-1170-adj-wrench-chrome.jpg",
+    "imageSnippet": "Taparia adjustable wrench.",
+    "hsnCode": "82041210"
+  },
+  {
+    "id": "taparia-side-cutting-pliers",
+    "name": "Side Cutting Pliers",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "160mm, 200mm",
+    "material": "",
+    "finish": "",
+    "features": [
+      "Generally conforming to IS 4378 (I) - 2017",
+      "Induction hardened cutting edges to 55-60 HRC for clean copper and wire cuts",
+      "Thick insulating C.A. sleeve provides high dielectric resistance and ergonomic grip"
+    ],
+    "suitableFor": "Electrical wiring, component lead trimming, copper and brass wire cutting",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-side-cutting-pliers.jpg",
+    "imageSnippet": "Taparia insulated side cutting pliers with emerald green handles.",
+    "hsnCode": "82032000"
+  },
+  {
+    "id": "taparia-long-nose-pliers",
+    "name": "Nose Pliers",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "160mm, 200mm",
+    "material": "",
+    "finish": "",
+    "features": [],
+    "suitableFor": "Switchboard repair, delicate electronics, radio and TV servicing, wire looping",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-long-nose-pliers.jpg",
+    "imageSnippet": "Flat Nose, Long Nose, Round Nose, Bent Nose",
+    "hsnCode": "82032000"
+  },
+  {
+    "id": "taparia-nippers-cutter",
+    "name": "Taparia Precision Diagonal Nippers (Spring Loaded)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "Model 1221 (130mm / 5\")",
+    "material": "Alloy steel with precision ground flush cutting jaws",
+    "finish": "Blue spring return cushion grip handles",
+    "features": [
+      "Ultra-sharp flush cutting edges for tie-wraps, plastic sprues, and thin copper wires",
+      "Spring-assisted return reduces hand fatigue during repetitive wire cutting",
+      "Lightweight and compact for hobbyists, mechanics, and electronics technicians"
+    ],
+    "suitableFor": "Electronic PCB assembly, zip tie trimming, jewelry making, miniature crafts",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-nippers-cutter.jpg",
+    "imageSnippet": "Taparia spring-loaded blue nippers on workbench.",
+    "hsnCode": "82032000",
+    "mrp": 145
+  },
+  {
+    "id": "taparia-wire-stripping-pliers-aws8",
+    "name": "Taparia Wire Stripping Pliers (AWS 8)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "AWS 8 (205mm / 8\")",
+    "material": "High carbon steel with precision sized wire gauge notches",
+    "finish": "Black oxide finish with ergonomic dual-tone green handles",
+    "features": [
+      "Generally conforming to IS 5087-1969",
+      "Precision ground stripping holes for wire sizes 0.5mm\u00b2 to 6.0mm\u00b2",
+      "Built-in wire cutter and looping holes prevent damaging copper strands"
+    ],
+    "suitableFor": "Home electrical installation, lighting fixtures, inverter and panel wiring",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-wire-stripping-pliers-aws8.jpg",
+    "imageSnippet": "Taparia AWS 8 multi-notch wire stripping pliers.",
+    "hsnCode": "82032000",
+    "mrp": 399
+  },
+  {
+    "id": "taparia-flat-phillips-screwdrivers",
+    "name": "Taparia Flat & Phillips Screwdrivers (Green C.A. Handle)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "Flat: 3.2x75mm, 4x100mm, 5x150mm, 6x200mm | Phillips: PH0, PH1, PH2, PH3",
+    "material": "High tensile silicon manganese alloy steel, magnetized tip",
+    "finish": "Hardened chrome blade with transparent green shatter-proof C.A. handle",
+    "features": [
+      "Generally conforming to IS 844-1979 | Design No. 177211",
+      "Unbreakable transparent cellulose acetate handle resists oil, grease, and impacts",
+      "Strong magnetized tip holds screws firmly during installation"
+    ],
+    "suitableFor": "Ceiling fans, switchboards, furniture assembly, appliance repair",
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/taparia-flat-phillips-screwdrivers.jpg",
+    "imageSnippet": "Taparia green handle screwdrivers with magnetic tips.",
+    "hsnCode": "82054000"
+  },
+  {
+    "id": "taparia-821-screwdriver-set",
+    "name": "Taparia 821 Multi-Blade Screwdriver Set (6 Blades)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "Set of 6 Blades (Phillips 00, 0, 1, 2, 3 and Flat 6x0.6mm)",
+    "material": "Hardened chrome vanadium blades with quick-locking handle",
+    "finish": "Durable green handle with transparent protective storage case",
+    "features": [
+      "Design No. 180673 | HSN: 82054000",
+      "6 interchangeable double-ended blades cover 95% of household and shop screws",
+      "Quick-clamping collar locks blades with zero wobble",
+      "Standard shop packing box protects blades from misplacement"
+    ],
+    "suitableFor": "Comprehensive DIY household toolkits, electrical appliances, toys and hardware",
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/taparia-821-screwdriver-set.jpg",
+    "imageSnippet": "Taparia 821 six blade screwdriver set with green handle in display carton.",
+    "hsnCode": "82054000",
+    "mrp": 281
+  },
+  {
+    "id": "taparia-line-testers-814-818",
+    "name": "Taparia Neon Electrical Safety Line Testers (813, 814, 818)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "814 (125mm Green), 813 (130mm Yellow), 818 (200mm Heavy Yellow)",
+    "material": "Transparent shockproof insulating resin with brass touch point and resistor",
+    "finish": "Bright high-visibility glowing neon bulb with spring pocket clip",
+    "features": [
+      "Generally conforming to IS 5579-1985 | Safe testing range: 100V \u2013 500V AC",
+      "Built-in current limiting safety resistor prevents electric shock",
+      "Compact pocket clip for electricians and homeowners"
+    ],
+    "suitableFor": "Checking phase live wire in wall sockets, inverter battery points, main MCBs",
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/taparia-line-testers-814-818.jpg",
+    "imageSnippet": "Taparia 814 and 818 neon safety testers in shop tray.",
+    "hsnCode": "82054000",
+    "mrp": 54
+  },
+  {
+    "id": "taparia-two-in-one-line-tester-819",
+    "name": "Taparia Two-In-One Reversible Line Tester (819)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "Blade Length 65mm | Phillips 0 & Flat 4.0 x 0.7mm tip",
+    "material": "Insulated transparent body with reversible magnetized blade",
+    "finish": "Yellow transparent handle with high-lumen neon lamp",
+    "features": [
+      "Dual purpose: functions both as electrical line tester and tightening screwdriver",
+      "Reversible blade: switch between flat head and Phillips head in seconds",
+      "Safe up to 500V AC testing"
+    ],
+    "suitableFor": "Tightening wall switch screws, tightening plug pins, testing live phase line",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-two-in-one-line-tester-819.jpg",
+    "imageSnippet": "Taparia 819 two in one reversible tester with transparent yellow handle.",
+    "hsnCode": "82054000",
+    "mrp": 72
+  },
+  {
+    "id": "taparia-digital-voltage-tester",
+    "name": "Taparia Digital Voltage & Continuity Tester (LCD Display)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "Compact handheld probe (12V \u2013 250V AC/DC)",
+    "material": "Impact resistant ABS plastic casing with hardened probe tip",
+    "finish": "Matte black with high-contrast digital LCD indicator",
+    "features": [
+      "Direct numerical voltage reading (12V, 36V, 55V, 110V, 220V)",
+      "Induction breakpoint test: detects broken wires inside concealed walls without stripping",
+      "Tests both AC mains and DC vehicle battery systems"
+    ],
+    "suitableFor": "Concealed wire tracing, inverter testing, car battery check, home appliances",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-digital-voltage-tester.jpg",
+    "imageSnippet": "Taparia digital tester with LCD reading display.",
+    "hsnCode": "82054000",
+    "mrp": 145
+  },
+  {
+    "id": "taparia-sa46-socket-set",
+    "name": "Taparia 1/4\" Dr. 46 Pcs Socket & Bit Set (SA 46 in Hard Case)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "46 Pieces Complete Kit (Sockets 4mm to 14mm + Torx/Hex/Phillips Bits + Ratchet)",
+    "material": "Chrome Vanadium Steel (Cr-V) with hardened quick-release 72T ratchet",
+    "finish": "Mirror chrome finish in heavy-duty custom blow-moulded blue case",
+    "features": [
+      "Comprehensive 46 Pcs Set: Hex Sockets 4 to 14mm, Extension Bars, Universal Joint, Flexible Extension, Sliding T-Bar",
+      "Complete bit set: Hex (3-8mm), Flat (4, 5.5, 7mm), Phillips (PH1-3), Torx (T8-T40), Pozidrive (PZ1-3), Allen keys",
+      "Ergonomic quick-release ratchet handle A-715 with spinner handle A-704",
+      "Blow moulding case prevents loss of small sockets in workshops"
+    ],
+    "suitableFor": "Automobile mechanics, bike engine servicing, modular kitchen fittings, home appliances",
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/taparia-sa46-socket-set.jpg",
+    "imageSnippet": "Taparia SA 46 blow-moulded blue case with comprehensive socket collection.",
+    "hsnCode": "82042000",
+    "mrp": 2622
+  },
+  {
+    "id": "taparia-s38h-socket-set",
+    "name": "Taparia 3/8\" Dr. Socket Set (S 3/8 H - 20 Pcs in Steel Box)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "20 Pieces (14 Sockets 6mm to 22mm + Spark Plug Socket + 6 Accessories)",
+    "material": "Cold-forged Chrome Vanadium steel with flank drive profile",
+    "finish": "Bright chrome plated in heavy steel carrying case",
+    "features": [
+      "14 Flank Drive Sockets: 6, 7, 8, 9, 10, 11, 12, 13, 14, 17, 19, 21, 22mm",
+      "Includes dedicated Spark Plug Socket BSP21 for two-wheelers and tractors",
+      "Heavy duty reversible ratchet, extension bars, and universal joint"
+    ],
+    "suitableFor": "Two-wheeler mechanics, generator repair, tractor maintenance in Jhansi region",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-s38h-socket-set.jpg",
+    "imageSnippet": "Taparia S 3/8 H socket set in red industrial metal box.",
+    "hsnCode": "82042000",
+    "mrp": 3568
+  },
+  {
+    "id": "taparia-dep-spanners-chrome",
+    "name": "Taparia Double Ended Open Jaw Spanners (DEP Series)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "DEP 06 (6x7 to 16x17mm), DEP 08 (6x7 to 20x22mm), DEP 12 (6x7 to 30x32mm)",
+    "material": "Drop forged high grade chrome vanadium alloy steel",
+    "finish": "Mirror Nickel Chrome Plating (IS 2028-2026)",
+    "features": [
+      "Conforming to IS 2028-2026 | HSN: 82041110",
+      "Precision broached jaw profile fits hex nuts with tight non-slip tolerances",
+      "Slim head profile allows working in recessed and cramped spaces",
+      "Available individually or in matched sets (DEP 06, DEP 08, DEP 12)"
+    ],
+    "suitableFor": "Vehicle maintenance, water pump fitting, pipe flanges, home furniture assembly",
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/taparia-dep-spanners-chrome.jpg",
+    "imageSnippet": "Taparia double ended open jaw chrome spanner rack.",
+    "hsnCode": "82041110",
+    "mrp": 625
+  },
+  {
+    "id": "taparia-ring-spanners-1808",
+    "name": "Taparia Bi-Hexagonal Deep Ring Spanners (18 Series Sets)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "1806 (6x7 to 16x17mm), 1808 (6x7 to 20x22mm), 1812 (6x7 to 30x32mm)",
+    "material": "Drop forged high tensile alloy steel, 75-degree deep offset rings",
+    "finish": "Bright Nickel Chrome Finish (IS 2029-2026)",
+    "features": [
+      "Generally conforming to IS 2029-2026 | HSN: 82041110",
+      "75-degree deep cranked offset head clears obstructions and protects fingers",
+      "12-point bi-hexagonal ring provides complete 360-degree grip on stubborn rusted nuts",
+      "Supplied in sturdy vinyl roll-up pouch or hanger rack"
+    ],
+    "suitableFor": "Heavy machinery bolts, engine head bolts, vehicle leaf springs and suspensions",
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/taparia-ring-spanners-1808.jpg",
+    "imageSnippet": "Taparia deep offset ring spanners hanging in roll pouch.",
+    "hsnCode": "82041110",
+    "mrp": 875
+  },
+  {
+    "id": "taparia-combination-spanners-cs",
+    "name": "Taparia Combination Spanners Open & Ring (CS Series)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "CSS 6 (8-17mm), CSS 8 (8-19mm), CSS 12 (6-22mm), CSS 14 (6-32mm)",
+    "material": "Drop forged alloy steel with hardened open and 15-degree ring ends",
+    "finish": "Mirror Finish Chrome Plated (IS 6389-1998)",
+    "features": [
+      "Generally conforming to IS 6389-1998 | HSN: 82041110",
+      "Open jaw on one side for fast spinning + 15\u00b0 ring on other side for final high-torque tightening",
+      "Smooth round-edged beam provides comfortable grip under heavy leverage"
+    ],
+    "suitableFor": "Auto workshops, fabrication units, home DIY toolkits",
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/taparia-combination-spanners-cs.jpg",
+    "imageSnippet": "Taparia CS series combination spanner set displayed in metal rack.",
+    "hsnCode": "82041110",
+    "mrp": 678
+  },
+  {
+    "id": "taparia-octagonal-cold-chisels",
+    "name": "Taparia Heavy Octagonal Cold Chisels (101 to 107)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "101 (125x9mm), 102 (150x16mm), 104 (200x22mm), 105 (200x25mm), 107 (300x32mm)",
+    "material": "Forged high carbon steel with induction hardened cutting edge",
+    "finish": "Durable blue epoxy powder coating with polished hardened tip",
+    "features": [
+      "Generally conforming to IS 402-1990 | HSN: 82053000",
+      "Hardened and tempered cutting edge (52-58 HRC) chips concrete and cuts metal without chipping",
+      "Striking head is specially tempered to prevent mushrooming and flying metal fragments"
+    ],
+    "suitableFor": "Chipping concrete walls for electrical conduit, cutting rusty bolts, brick chasing",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-octagonal-cold-chisels.jpg",
+    "imageSnippet": "Taparia octagonal blue cold chisels in assorted lengths.",
+    "hsnCode": "82053000",
+    "mrp": 151
+  },
+  {
+    "id": "taparia-center-drift-punches",
+    "name": "Taparia Precision Center Punches & Leather Hole Punches",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "Center Punches (1884 100mm, 1885 125mm) | Leather Punches (LP 3 to LP 25, 3mm to 25mm)",
+    "material": "Hardened high carbon tool steel with knurled gripping body",
+    "finish": "Black oxide rust-resistant finish with sharp ground cutting edges",
+    "features": [
+      "Conforming to IS 7177-1999 | HSN: 82034010",
+      "Center punch makes clear indentation to prevent drill bits from wandering on metal or tiles",
+      "Hollow leather punch LP series cuts clean circular holes in leather, rubber, gasket sheet, and plastic"
+    ],
+    "suitableFor": "Marking drilling points, making custom engine gaskets, belt hole punching",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-center-drift-punches.jpg",
+    "imageSnippet": "Taparia center and leather hollow punches on counter.",
+    "hsnCode": "82034010",
+    "mrp": 53
+  },
+  {
+    "id": "taparia-bolt-cutters-bc",
+    "name": "Taparia Heavy Duty Bolt Cutters (BC Series 8\" to 48\")",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "BC-8 (200mm/4mm cut), BC-12 (300mm/5mm), BC-14 (350mm/6mm), BC-24 (600mm/9mm), BC-36 (900mm/15mm)",
+    "material": "Drop forged high alloy chrome molybdenum steel jaws with tubular steel handles",
+    "finish": "Black hardened blades with industrial red casing and non-slip rubber grips",
+    "features": [
+      "Generally conforming to IS 5200-1998 | HSN: 82034090",
+      "Compound lever mechanism multiplies hand force to slice effortlessly through iron rods and chains",
+      "Eccentric bolt allows quick re-alignment of cutter jaws after prolonged heavy use"
+    ],
+    "suitableFor": "Cutting concrete reinforcement bars, padlocks, iron mesh jali, steel wire ropes",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-bolt-cutters-bc.jpg",
+    "imageSnippet": "Taparia heavy bolt cutters in red finish with compound leverage arms.",
+    "hsnCode": "82034090",
+    "mrp": 984
+  },
+  {
+    "id": "taparia-allen-key-sets-metric",
+    "name": "Taparia Hex Allen Key Sets (KM 9V Box & KHM 9V Hanger Pack)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "9 Pcs Set (1.5, 2, 2.5, 3, 4, 5, 6, 8, 10mm) | Imperial 10 Pcs Set (1/16\" to 3/8\")",
+    "material": "High grade alloy spring steel (IS 3082-2008)",
+    "finish": "Anti-corrosion Black Phosphate & Oiled Brown finishes",
+    "features": [
+      "Conforming to IS 3082-2008 | HSN: 82041120",
+      "Accurately chamfered ends slide effortlessly into socket head cap screws without rounded edges",
+      "High torsional flexibility withstands maximum torque without snapping",
+      "Choice of sturdy green snap-lock box (KM 9V) or wall-hanging clip holder (KHM 9V)"
+    ],
+    "suitableFor": "Modular furniture assembly, bicycle disc brakes, machinery maintenance",
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/taparia-allen-key-sets-metric.jpg",
+    "imageSnippet": "Taparia KM 9V emerald green clip holder with 9 hex keys.",
+    "hsnCode": "82041120",
+    "mrp": 246
+  },
+  {
+    "id": "taparia-ball-point-allen-keys-kbhm9l",
+    "name": "Taparia Ball Point Extra Long Allen Key Set (KBHM 9L)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "9 Pcs Long Ball End Set (1.5, 2, 2.5, 3, 4, 5, 6, 8, 10mm)",
+    "material": "Hardened and tempered high tensile spring steel",
+    "finish": "Bright rust-resistant satin finish in hanger pack",
+    "features": [
+      "Ball end head allows tightening bolts at up to 25-degree angles in hard-to-reach corners",
+      "Extra long shanks provide double the leverage and extended reach into deep recesses",
+      "Precision broached edges resist slipping under heavy pressure"
+    ],
+    "suitableFor": "Automotive engine bays, machine guards, concealed fasteners in electronics",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-ball-point-allen-keys-kbhm9l.jpg",
+    "imageSnippet": "Taparia extra long ball point hex key set in red and black holder.",
+    "hsnCode": "82041120",
+    "mrp": 653
+  },
+  {
+    "id": "taparia-t-handle-hex-torx-keys",
+    "name": "Taparia Ergonomic T-Handle Hex & Torx Keys (TAK Series)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "TAK 1.5 to TAK 10 (Metric 1.5 to 10mm) | Torx T10 to T50",
+    "material": "Alloy steel shaft with molded ergonomic cross-handle",
+    "finish": "Satin chrome shaft with sky-blue comfort-grip handle",
+    "features": [
+      "T-handle delivers maximum torque with minimal hand fatigue and zero slip",
+      "Dual drive ends: long shaft for recessed bolts and short cross-end for ultimate breakaway torque",
+      "Available with heavy metal stand (TAKM 9) for workshop organization"
+    ],
+    "suitableFor": "Two-wheeler workshops, motorcycle mechanics, CNC machine setup",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-t-handle-hex-torx-keys.jpg",
+    "imageSnippet": "Taparia T-handle blue hex key stand on mechanic counter.",
+    "hsnCode": "82041120",
+    "mrp": 974
+  },
+  {
+    "id": "taparia-folding-hex-torx-sets",
+    "name": "Taparia Pocket Folding Hex & Torx Key Sets (KFM 8 / KFT 8)",
+    "brand": "Taparia",
+    "category": "hand-tools",
+    "sizes": "KFM 8 (Hex 1.5 to 8mm) | KFT 8 (Torx T9, T10, T15, T20, T25, T27, T30, T40)",
+    "material": "Hardened spring alloy steel blades housed in impact-proof polymer case",
+    "finish": "Corrosion-resistant black finish in pocket knife style folding handle",
+    "features": [
+      "Fold-up pocket design prevents losing individual keys on outdoor job sites",
+      "Handle acts as an extended lever for high-torque tightening",
+      "Essential carry kit for cyclists, motorbike riders, and site technicians"
+    ],
+    "suitableFor": "On-the-go bicycle repairs, motorbikes, emergency toolkits",
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/taparia-folding-hex-torx-sets.jpg",
+    "imageSnippet": "Taparia pocket folding hex key set.",
+    "hsnCode": "82041120",
+    "mrp": 413
+  }
+];

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="stIconGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="35%" stop-color="#F59E0B" />
+      <stop offset="70%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <linearGradient id="stIconNavy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded Hexagon Base -->
+  <rect width="100" height="100" rx="24" fill="url(#stIconNavy)"/>
+  <rect x="3.5" y="3.5" width="93" height="93" rx="20.5" fill="none" stroke="url(#stIconGold)" stroke-width="2.5" opacity="0.85"/>
+
+  <!-- Geometric ST Monogram -->
+  <g transform="translate(50, 50)">
+    <!-- 'S' Letter -->
+    <path d="M-6,-24 C-17,-24 -25,-16 -25,-6 C-25,6 -15,11 -4,15 C7,19 11,23 11,29 C11,35 4,39 -6,39 C-16,39 -24,33 -26,25 L-15,23 C-14,28 -9,31 -5,31 C1,31 4,28 4,24 C4,20 -2,16 -12,12 C-22,8 -30,2 -30,-7 C-30,-18 -20,-28 -5,-28 C4,-28 14,-24 17,-17 L7,-12 C5,-18 0,-24 -6,-24 Z" fill="url(#stIconGold)"/>
+
+    <!-- 'T' Letter (Interlaced) -->
+    <path d="M-9,-29 L28,-29 L28,-20 L14,-20 L14,37 L4,37 L4,-20 L-9,-20 Z" fill="#FDE68A"/>
+
+    <!-- Accent Rivets -->
+    <circle cx="11" cy="-24.5" r="3" fill="#0F172A"/>
+  </g>
+</svg>
