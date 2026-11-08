@@ -1,5 +1,21 @@
 [
   {
+    "id": "nippers",
+    "name": "Nippers",
+    "brand": "Taparia, Multitec",
+    "category": "hand-tools",
+    "sizes": "",
+    "variants": "",
+    "material": "",
+    "finish": "",
+    "features": [],
+    "suitableFor": "",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "",
+    "image": "/images/products/nippers.jpg"
+  },
+  {
     "id": "locking-pliers",
     "name": "Locking Pliers",
     "brand": "Taparia",
@@ -30,25 +46,6 @@
     "featured": false,
     "imageSnippet": "",
     "image": "/images/products/water-pump-pliers.jpg"
-  },
-  {
-    "id": "taparia-circlip-pliers",
-    "name": "Circlip Pliers",
-    "brand": "Taparia",
-    "category": "hand-tools",
-    "sizes": "120mm - 300mm",
-    "variants": "Internal Straight, External St., Bent",
-    "material": "",
-    "finish": "Black Phosphate",
-    "features": [
-      "Precision hardened tips",
-      "Non-slip spring loaded handles"
-    ],
-    "suitableFor": "Circlip ring fitting, auto repairs",
-    "inStock": true,
-    "featured": false,
-    "imageSnippet": "",
-    "image": "/images/products/taparia-circlip-pliers.png"
   },
   {
     "id": "taparia-pliers-set",
@@ -128,11 +125,11 @@
   },
   {
     "id": "pye-wire-stripper",
-    "name": "PYE Easy Wire Stripper & Cutter (Model 950)",
-    "brand": "PYE",
+    "name": "Wire Stripper",
+    "brand": "Taparia | Multitec",
     "category": "hand-tools",
-    "sizes": "Universal gauge (0.5 to 6 sq mm)",
-    "material": "Carbon steel with blue spring-cushioned handles",
+    "sizes": "",
+    "material": "",
     "finish": "Powder-coated with blue spring return cushion handles",
     "features": [
       "Clean wire stripping in one squeeze without cutting inner copper strands",
@@ -142,8 +139,9 @@
     "suitableFor": "Installing lighting fixtures, home speakers, inverter batteries",
     "inStock": true,
     "featured": false,
-    "imageSnippet": "PYE 950 wire stripper in blister packaging visible on front counter.",
-    "image": "/images/products/pye-wire-stripper.jpg"
+    "imageSnippet": "",
+    "image": "/images/products/pye-wire-stripper.jpg",
+    "variants": ""
   },
   {
     "id": "apollo-tap-die-set",
@@ -594,27 +592,6 @@
     "imageSnippet": "Flat Nose, Long Nose, Round Nose, Bent Nose",
     "hsnCode": "82032000",
     "variants": "Flat, Long, Round, Bent Nose"
-  },
-  {
-    "id": "taparia-nippers-cutter",
-    "name": "Taparia Precision Diagonal Nippers (Spring Loaded)",
-    "brand": "Taparia",
-    "category": "hand-tools",
-    "sizes": "Model 1221 (130mm / 5\")",
-    "material": "Alloy steel with precision ground flush cutting jaws",
-    "finish": "Blue spring return cushion grip handles",
-    "features": [
-      "Ultra-sharp flush cutting edges for tie-wraps, plastic sprues, and thin copper wires",
-      "Spring-assisted return reduces hand fatigue during repetitive wire cutting",
-      "Lightweight and compact for hobbyists, mechanics, and electronics technicians"
-    ],
-    "suitableFor": "Electronic PCB assembly, zip tie trimming, jewelry making, miniature crafts",
-    "inStock": true,
-    "featured": false,
-    "image": "/images/products/taparia-nippers-cutter.jpg",
-    "imageSnippet": "Taparia spring-loaded blue nippers on workbench.",
-    "hsnCode": "82032000",
-    "mrp": 145
   },
   {
     "id": "taparia-flat-phillips-screwdrivers",
