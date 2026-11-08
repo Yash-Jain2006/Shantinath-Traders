@@ -1,5 +1,21 @@
 [
   {
+    "id": "paints",
+    "name": "Paints ",
+    "brand": "Asian | Raunaq",
+    "category": "paints",
+    "sizes": "50gm, 100gm, 200gm, 500gm, 1kg",
+    "variants": "White, Black, G.Yellow, Bus Green, G. Brown, T.Brown, Phirozi, Ox. Blue, PL. Cream, DP. Orange",
+    "material": "",
+    "finish": "",
+    "features": [],
+    "suitableFor": "",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "",
+    "image": "/images/products/paints.jpg"
+  },
+  {
     "id": "allen-keys",
     "name": "Allen Keys",
     "brand": "Taparia ",
