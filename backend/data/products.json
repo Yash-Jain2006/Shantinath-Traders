@@ -1,5 +1,21 @@
 [
   {
+    "id": "screwdriver-sets",
+    "name": "Screwdriver Sets",
+    "brand": "Taparia | PYE",
+    "category": "hand-tools",
+    "sizes": "",
+    "variants": "",
+    "material": "",
+    "finish": "",
+    "features": [],
+    "suitableFor": "",
+    "inStock": true,
+    "featured": false,
+    "imageSnippet": "",
+    "image": "/images/products/screwdriver-sets.png"
+  },
+  {
     "id": "nippers",
     "name": "Nippers",
     "brand": "Taparia, Multitec",
@@ -68,22 +84,19 @@
   },
   {
     "id": "taparia-screwdrivers",
-    "name": "Taparia Precision Screwdriver Set & Testers",
+    "name": "Precision Screwdriver Set",
     "brand": "Taparia",
     "category": "hand-tools",
-    "sizes": "Flat & Phillips (PH0, PH1, PH2, Stubby, Long Shank)",
-    "material": "Hardened alloy steel with magnetized screw-holding tips",
+    "sizes": "",
+    "material": "",
     "finish": "Comfortable shatter-proof yellow/green acetate handles",
-    "features": [
-      "Strong magnetic tip prevents dropping small screws inside appliances",
-      "Ergonomic handle for easy twisting without hand strain",
-      "Includes electrical line tester with neon glowing bulb"
-    ],
+    "features": [],
     "suitableFor": "Fixing wall switches, fan regulators, kitchen appliances, toys, and electronics",
     "inStock": true,
     "featured": false,
-    "imageSnippet": "Array of green and yellow cellulose acetate handled Taparia screwdrivers.",
-    "image": "/images/products/taparia-screwdrivers.jpg"
+    "imageSnippet": "",
+    "image": "/images/products/taparia-screwdrivers.png",
+    "variants": ""
   },
   {
     "id": "taparia-line-testers",
@@ -125,7 +138,7 @@
   },
   {
     "id": "pye-wire-stripper",
-    "name": "Wire Stripper",
+    "name": "Wire Stripper & Wire Crimmper",
     "brand": "Taparia | Multitec",
     "category": "hand-tools",
     "sizes": "",
@@ -140,7 +153,7 @@
     "inStock": true,
     "featured": false,
     "imageSnippet": "",
-    "image": "/images/products/pye-wire-stripper.jpg",
+    "image": "/images/products/pye-wire-stripper.png",
     "variants": ""
   },
   {
@@ -595,108 +608,20 @@
   },
   {
     "id": "taparia-flat-phillips-screwdrivers",
-    "name": "Taparia Flat & Phillips Screwdrivers (Green C.A. Handle)",
-    "brand": "Taparia",
+    "name": "Flat & Phillips Screwdrivers",
+    "brand": "Taparia | Multitech",
     "category": "hand-tools",
-    "sizes": "Flat: 3.2x75mm, 4x100mm, 5x150mm, 6x200mm | Phillips: PH0, PH1, PH2, PH3",
-    "material": "High tensile silicon manganese alloy steel, magnetized tip",
+    "sizes": "",
+    "material": "",
     "finish": "Hardened chrome blade with transparent green shatter-proof C.A. handle",
-    "features": [
-      "Generally conforming to IS 844-1979 | Design No. 177211",
-      "Unbreakable transparent cellulose acetate handle resists oil, grease, and impacts",
-      "Strong magnetized tip holds screws firmly during installation"
-    ],
+    "features": [],
     "suitableFor": "Ceiling fans, switchboards, furniture assembly, appliance repair",
     "inStock": true,
-    "featured": true,
-    "image": "/images/products/taparia-flat-phillips-screwdrivers.jpg",
+    "featured": false,
+    "image": "/images/products/taparia-flat-phillips-screwdrivers.png",
     "imageSnippet": "Taparia green handle screwdrivers with magnetic tips.",
-    "hsnCode": "82054000"
-  },
-  {
-    "id": "taparia-821-screwdriver-set",
-    "name": "Taparia 821 Multi-Blade Screwdriver Set (6 Blades)",
-    "brand": "Taparia",
-    "category": "hand-tools",
-    "sizes": "Set of 6 Blades (Phillips 00, 0, 1, 2, 3 and Flat 6x0.6mm)",
-    "material": "Hardened chrome vanadium blades with quick-locking handle",
-    "finish": "Durable green handle with transparent protective storage case",
-    "features": [
-      "Design No. 180673 | HSN: 82054000",
-      "6 interchangeable double-ended blades cover 95% of household and shop screws",
-      "Quick-clamping collar locks blades with zero wobble",
-      "Standard shop packing box protects blades from misplacement"
-    ],
-    "suitableFor": "Comprehensive DIY household toolkits, electrical appliances, toys and hardware",
-    "inStock": true,
-    "featured": true,
-    "image": "/images/products/taparia-821-screwdriver-set.jpg",
-    "imageSnippet": "Taparia 821 six blade screwdriver set with green handle in display carton.",
     "hsnCode": "82054000",
-    "mrp": 281
-  },
-  {
-    "id": "taparia-line-testers-814-818",
-    "name": "Taparia Neon Electrical Safety Line Testers (813, 814, 818)",
-    "brand": "Taparia",
-    "category": "hand-tools",
-    "sizes": "814 (125mm Green), 813 (130mm Yellow), 818 (200mm Heavy Yellow)",
-    "material": "Transparent shockproof insulating resin with brass touch point and resistor",
-    "finish": "Bright high-visibility glowing neon bulb with spring pocket clip",
-    "features": [
-      "Generally conforming to IS 5579-1985 | Safe testing range: 100V – 500V AC",
-      "Built-in current limiting safety resistor prevents electric shock",
-      "Compact pocket clip for electricians and homeowners"
-    ],
-    "suitableFor": "Checking phase live wire in wall sockets, inverter battery points, main MCBs",
-    "inStock": true,
-    "featured": true,
-    "image": "/images/products/taparia-line-testers-814-818.jpg",
-    "imageSnippet": "Taparia 814 and 818 neon safety testers in shop tray.",
-    "hsnCode": "82054000",
-    "mrp": 54
-  },
-  {
-    "id": "taparia-two-in-one-line-tester-819",
-    "name": "Taparia Two-In-One Reversible Line Tester (819)",
-    "brand": "Taparia",
-    "category": "hand-tools",
-    "sizes": "Blade Length 65mm | Phillips 0 & Flat 4.0 x 0.7mm tip",
-    "material": "Insulated transparent body with reversible magnetized blade",
-    "finish": "Yellow transparent handle with high-lumen neon lamp",
-    "features": [
-      "Dual purpose: functions both as electrical line tester and tightening screwdriver",
-      "Reversible blade: switch between flat head and Phillips head in seconds",
-      "Safe up to 500V AC testing"
-    ],
-    "suitableFor": "Tightening wall switch screws, tightening plug pins, testing live phase line",
-    "inStock": true,
-    "featured": false,
-    "image": "/images/products/taparia-two-in-one-line-tester-819.jpg",
-    "imageSnippet": "Taparia 819 two in one reversible tester with transparent yellow handle.",
-    "hsnCode": "82054000",
-    "mrp": 72
-  },
-  {
-    "id": "taparia-digital-voltage-tester",
-    "name": "Taparia Digital Voltage & Continuity Tester (LCD Display)",
-    "brand": "Taparia",
-    "category": "hand-tools",
-    "sizes": "Compact handheld probe (12V – 250V AC/DC)",
-    "material": "Impact resistant ABS plastic casing with hardened probe tip",
-    "finish": "Matte black with high-contrast digital LCD indicator",
-    "features": [
-      "Direct numerical voltage reading (12V, 36V, 55V, 110V, 220V)",
-      "Induction breakpoint test: detects broken wires inside concealed walls without stripping",
-      "Tests both AC mains and DC vehicle battery systems"
-    ],
-    "suitableFor": "Concealed wire tracing, inverter testing, car battery check, home appliances",
-    "inStock": true,
-    "featured": false,
-    "image": "/images/products/taparia-digital-voltage-tester.jpg",
-    "imageSnippet": "Taparia digital tester with LCD reading display.",
-    "hsnCode": "82054000",
-    "mrp": 145
+    "variants": "Simple, Insulated, Two-in-one, Stubby, Poker"
   },
   {
     "id": "taparia-sa46-socket-set",
