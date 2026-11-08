@@ -306,7 +306,7 @@
   {
     "id": "apollo-tap-die-set",
     "name": "Apollo Precision Threading Taps & Calipers",
-    "brand": "Apollo / A-Power",
+    "brand": "Apollo",
     "category": "hand-tools",
     "sizes": "M3 – M16 Taps, Adjustable Tap Wrenches, Calipers",
     "material": "High-Speed Tool Steel",
@@ -319,7 +319,8 @@
     "inStock": true,
     "featured": false,
     "imageSnippet": "Apollo tap wrench, threading dies, and calipers displayed on upper tool rack.",
-    "image": "/images/products/apollo-tap-die-set.jpg"
+    "image": "/images/products/apollo-tap-die-set.jpg",
+    "variants": ""
   },
   {
     "id": "bosch-impact-drill",
