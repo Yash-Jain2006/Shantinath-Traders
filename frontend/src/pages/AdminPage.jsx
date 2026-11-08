@@ -355,21 +355,41 @@ function DashboardView({ stats, onNavigate }) {
 function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNotification }) {
   const [search, setSearch] = useState('');
   const [filterCat, setFilterCat] = useState('all');
-  const [sortBy, setSortBy] = useState('default');
+  const [filterBrand, setFilterBrand] = useState('all');
+  const [filterStock, setFilterStock] = useState('all');
+  const [sortBy, setSortBy] = useState('name-asc');
   const [editingProduct, setEditingProduct] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
   const categories = ['all', ...new Set(products.map(p => p.category))];
 
+  const brands = useMemo(() => {
+    const set = new Set();
+    products.forEach(p => {
+      if (p.brand) {
+        const parts = p.brand.split(/[,|/]/).map(b => b.trim()).filter(Boolean);
+        parts.forEach(b => set.add(b));
+      }
+    });
+    return ['all', ...Array.from(set).sort((a, b) => a.localeCompare(b))];
+  }, [products]);
+
   const filtered = useMemo(() => {
     let result = products.filter(p => {
       const matchSearch = !search ||
-        p.name.toLowerCase().includes(search.toLowerCase()) ||
-        p.brand.toLowerCase().includes(search.toLowerCase()) ||
+        (p.name && p.name.toLowerCase().includes(search.toLowerCase())) ||
+        (p.brand && p.brand.toLowerCase().includes(search.toLowerCase())) ||
         (p.id && p.id.toLowerCase().includes(search.toLowerCase()));
       const matchCat = filterCat === 'all' || p.category === filterCat;
-      return matchSearch && matchCat;
+      const matchBrand = filterBrand === 'all' ||
+        (p.brand && p.brand.toLowerCase().includes(filterBrand.toLowerCase()));
+      const matchStock =
+        filterStock === 'all' ? true :
+        filterStock === 'in-stock' ? p.inStock === true :
+        filterStock === 'out-of-stock' ? !p.inStock :
+        filterStock === 'featured' ? p.featured === true : true;
+      return matchSearch && matchCat && matchBrand && matchStock;
     });
 
     const sorted = [...result];
@@ -405,7 +425,7 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
         break;
     }
     return sorted;
-  }, [products, search, filterCat, sortBy]);
+  }, [products, search, filterCat, filterBrand, filterStock, sortBy]);
 
   const handleDelete = async (id, name) => {
     setDeleting(true);
@@ -482,6 +502,7 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
         <select
           value={filterCat}
           onChange={e => setFilterCat(e.target.value)}
+          aria-label="Filter by category"
           style={{
             padding: '0.65rem 1rem', border: '1px solid #e2e8f0', borderRadius: '10px',
             fontSize: '0.88rem', fontWeight: 500, outline: 'none', background: '#f8fafc',
@@ -491,6 +512,39 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
           {categories.map(c => (
             <option key={c} value={c}>{c === 'all' ? 'All Categories' : c.replace(/-/g, ' ')}</option>
           ))}
+        </select>
+
+        {/* Brand Filter */}
+        <select
+          value={filterBrand}
+          onChange={e => setFilterBrand(e.target.value)}
+          aria-label="Filter by brand"
+          style={{
+            padding: '0.65rem 1rem', border: '1px solid #e2e8f0', borderRadius: '10px',
+            fontSize: '0.88rem', fontWeight: 500, outline: 'none', background: '#f8fafc',
+            cursor: 'pointer'
+          }}
+        >
+          {brands.map(b => (
+            <option key={b} value={b}>{b === 'all' ? 'All Brands' : b}</option>
+          ))}
+        </select>
+
+        {/* Stock Status Filter */}
+        <select
+          value={filterStock}
+          onChange={e => setFilterStock(e.target.value)}
+          aria-label="Filter by stock status"
+          style={{
+            padding: '0.65rem 1rem', border: '1px solid #e2e8f0', borderRadius: '10px',
+            fontSize: '0.88rem', fontWeight: 500, outline: 'none', background: '#f8fafc',
+            cursor: 'pointer'
+          }}
+        >
+          <option value="all">All Stock Status</option>
+          <option value="in-stock">In Stock Only</option>
+          <option value="out-of-stock">Out of Stock Only</option>
+          <option value="featured">Featured Only</option>
         </select>
 
         {/* Sorting Filter Dropdown */}
@@ -511,10 +565,13 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
           </select>
         </div>
 
-        {/* Add Product Button */}
-        <button onClick={onNavigateAdd} className="btn btn--primary" style={{ padding: '0.65rem 1.25rem', fontSize: '0.88rem' }}>
-          <Plus size={16} /> Add Product
-        </button>
+        {/* Product Count Badge */}
+        <div style={{
+          marginLeft: 'auto', fontSize: '0.88rem', fontWeight: 600,
+          color: '#64748b', whiteSpace: 'nowrap'
+        }}>
+          {filtered.length} of {products.length} products
+        </div>
       </div>
 
       {/* Products Table */}
