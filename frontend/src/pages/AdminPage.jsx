@@ -356,7 +356,6 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
   const [search, setSearch] = useState('');
   const [filterCat, setFilterCat] = useState('all');
   const [filterBrand, setFilterBrand] = useState('all');
-  const [filterStock, setFilterStock] = useState('all');
   const [sortBy, setSortBy] = useState('name-asc');
   const [editingProduct, setEditingProduct] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
@@ -365,14 +364,16 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
   const categories = ['all', ...new Set(products.map(p => p.category))];
 
   const brands = useMemo(() => {
-    const set = new Set();
+    const brandSet = new Set();
     products.forEach(p => {
       if (p.brand) {
-        const parts = p.brand.split(/[,|/]/).map(b => b.trim()).filter(Boolean);
-        parts.forEach(b => set.add(b));
+        p.brand.split(/[,|/]/).forEach(b => {
+          const trimmed = b.trim();
+          if (trimmed) brandSet.add(trimmed);
+        });
       }
     });
-    return ['all', ...Array.from(set).sort((a, b) => a.localeCompare(b))];
+    return ['all', ...Array.from(brandSet).sort((a, b) => a.localeCompare(b))];
   }, [products]);
 
   const filtered = useMemo(() => {
@@ -382,14 +383,8 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
         (p.brand && p.brand.toLowerCase().includes(search.toLowerCase())) ||
         (p.id && p.id.toLowerCase().includes(search.toLowerCase()));
       const matchCat = filterCat === 'all' || p.category === filterCat;
-      const matchBrand = filterBrand === 'all' ||
-        (p.brand && p.brand.toLowerCase().includes(filterBrand.toLowerCase()));
-      const matchStock =
-        filterStock === 'all' ? true :
-        filterStock === 'in-stock' ? p.inStock === true :
-        filterStock === 'out-of-stock' ? !p.inStock :
-        filterStock === 'featured' ? p.featured === true : true;
-      return matchSearch && matchCat && matchBrand && matchStock;
+      const matchBrand = filterBrand === 'all' || (p.brand && p.brand.toLowerCase().includes(filterBrand.toLowerCase()));
+      return matchSearch && matchCat && matchBrand;
     });
 
     const sorted = [...result];
@@ -425,7 +420,7 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
         break;
     }
     return sorted;
-  }, [products, search, filterCat, filterBrand, filterStock, sortBy]);
+  }, [products, search, filterCat, filterBrand, sortBy]);
 
   const handleDelete = async (id, name) => {
     setDeleting(true);
@@ -502,7 +497,6 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
         <select
           value={filterCat}
           onChange={e => setFilterCat(e.target.value)}
-          aria-label="Filter by category"
           style={{
             padding: '0.65rem 1rem', border: '1px solid #e2e8f0', borderRadius: '10px',
             fontSize: '0.88rem', fontWeight: 500, outline: 'none', background: '#f8fafc',
@@ -530,23 +524,6 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
           ))}
         </select>
 
-        {/* Stock Status Filter */}
-        <select
-          value={filterStock}
-          onChange={e => setFilterStock(e.target.value)}
-          aria-label="Filter by stock status"
-          style={{
-            padding: '0.65rem 1rem', border: '1px solid #e2e8f0', borderRadius: '10px',
-            fontSize: '0.88rem', fontWeight: 500, outline: 'none', background: '#f8fafc',
-            cursor: 'pointer'
-          }}
-        >
-          <option value="all">All Stock Status</option>
-          <option value="in-stock">In Stock Only</option>
-          <option value="out-of-stock">Out of Stock Only</option>
-          <option value="featured">Featured Only</option>
-        </select>
-
         {/* Sorting Filter Dropdown */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
           <select
@@ -563,14 +540,6 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
             <option value="name-desc">Sort: Name (Z → A)</option>
             <option value="featured-first">Sort: Featured First</option>
           </select>
-        </div>
-
-        {/* Product Count Badge */}
-        <div style={{
-          marginLeft: 'auto', fontSize: '0.88rem', fontWeight: 600,
-          color: '#64748b', whiteSpace: 'nowrap'
-        }}>
-          {filtered.length} of {products.length} products
         </div>
       </div>
 
