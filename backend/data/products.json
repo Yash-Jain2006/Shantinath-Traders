@@ -5,7 +5,7 @@
     "brand": "Asian | Raunaq",
     "category": "paints",
     "sizes": "50gm, 100gm, 200gm, 500gm, 1kg",
-    "variants": "White, Black, G.Yellow, Bus Green, G. Brown, T.Brown, Phirozi, Ox. Blue, PL. Cream, DP. Orange",
+    "variants": "White, Black, P.O. Red, G.Yellow, Bus Green, G. Brown, T.Brown, Phirozi, Ox. Blue, PL. Cream, DP. Orange, R.O. Primer, Golden, Silver",
     "material": "",
     "finish": "",
     "features": [],
@@ -431,63 +431,6 @@
     "featured": false,
     "imageSnippet": "Xtra-Power heavy red box atop the main industrial rack.",
     "image": "/images/products/xtra-power-hammer-drill.jpg"
-  },
-  {
-    "id": "apcolite-gloss-enamel",
-    "name": "Asian Paints Apcolite Premium Gloss Enamel",
-    "brand": "Asian Paints",
-    "category": "paints",
-    "sizes": "500ml, 1 Litre, 4 Litre Tins (All favorite home colors)",
-    "material": "High-gloss protective alkyd enamel",
-    "finish": "Mirror-shine washable finish (Pure White, Off-white, Brown, Green, etc.)",
-    "features": [
-      "Washable mirror gloss that wipes clean easily from fingerprints and oil",
-      "Protects iron grills and balcony railings from rust during rainy seasons",
-      "Beautiful rich shine on wooden doors and window frames"
-    ],
-    "suitableFor": "Main entrance gates, balcony grills, wooden doors, window frames, metal furniture",
-    "inStock": true,
-    "featured": true,
-    "imageSnippet": "Rows of genuine Apcolite tins stacked neatly across middle rack shelves.",
-    "image": "/images/products/apcolite-gloss-enamel.jpg"
-  },
-  {
-    "id": "super-synthetic-enamel",
-    "name": "Super Synthetic Enamel for Gates, Grills & Furniture",
-    "brand": "Asian Paints / Shalimar",
-    "category": "paints",
-    "sizes": "500ml, 1 Litre, 4 Litre Tins",
-    "material": "Quick drying synthetic enamel",
-    "finish": "Vibrant rich colors (Black, Bus Green, Phirozi, Golden Yellow, Signal Red)",
-    "features": [
-      "Fast drying so you can finish painting your gate in one afternoon",
-      "High coverage per tin — great value for home beautification",
-      "Weather-resistant shine that doesn't fade under the Jhansi sun"
-    ],
-    "suitableFor": "Iron gates, steel almirahs, coolers, window coolers, railings",
-    "inStock": true,
-    "featured": false,
-    "imageSnippet": "Super Synthetic Enamel cans lined up with crisp factory labels.",
-    "image": "/images/products/super-synthetic-enamel.jpg"
-  },
-  {
-    "id": "red-oxide-primer",
-    "name": "Anti-Rust Red Oxide Primer for Metal Surfaces",
-    "brand": "Asian Paints / Master Primers",
-    "category": "paints",
-    "sizes": "1 Litre, 4 Litre Tins",
-    "material": "Zinc chromate anti-corrosive base primer",
-    "finish": "Smooth matte rust-preventive coat",
-    "features": [
-      "Apply directly on rusted or new iron before painting to prevent peeling",
-      "Stops rust from eating away your coolers and metal railings",
-      "Provides smooth adhesion for your topcoat paint"
-    ],
-    "suitableFor": "Water coolers, window grills, iron doors, metal staircases",
-    "inStock": true,
-    "featured": false,
-    "imageSnippet": "Primer cans positioned on lower shelf for fabrication contractors.",
-    "image": "/images/products/red-oxide-primer.jpg"
   },
   {
     "id": "industrial-paint-thinners",
