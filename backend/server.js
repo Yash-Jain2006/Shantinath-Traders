@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import multer from 'multer';
-import { supabase, getCachedProducts, setCachedProducts, invalidateCache } from './supabaseClient.js';
+import { supabase } from './supabaseClient.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,22 +12,32 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Determine environment
+const IS_VERCEL = !!process.env.VERCEL || !!process.env.VERCEL_ENV;
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-// Data file paths
+// Data file paths (local dev only)
 const shopFilePath = path.join(__dirname, 'data', 'shop.json');
 const categoriesFilePath = path.join(__dirname, 'data', 'categories.json');
 const productsFilePath = path.join(__dirname, 'data', 'products.json');
 const inquiriesFilePath = path.join(__dirname, 'data', 'inquiries.json');
 
-// Multer storage for product images
+// Multer storage for product images (local dev only)
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadDir = path.join(__dirname, '..', 'frontend', 'public', 'images', 'products');
-    if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-    cb(null, uploadDir);
+    try {
+      if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+      cb(null, uploadDir);
+    } catch (e) {
+      // On Vercel, /tmp is writable
+      const tmpDir = '/tmp/product-images';
+      if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
+      cb(null, tmpDir);
+    }
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
@@ -37,69 +47,59 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
-// Helper to read JSON
+// Helper to read local JSON (dev fallback)
 function readJson(filePath) {
   try {
     const raw = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(raw);
   } catch (err) {
-    console.error(`Error reading ${filePath}:`, err);
     return [];
   }
 }
 
-// Helper to write JSON
+// Helper to write local JSON (dev only, silently skips on Vercel)
 function writeJson(filePath, data) {
+  if (IS_VERCEL) return false;
   try {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
     return true;
   } catch (err) {
-    console.error(`Error writing ${filePath}:`, err);
+    console.warn(`writeJson skipped (read-only fs): ${filePath}`);
     return false;
   }
 }
 
-// Helper: Synchronize products to frontend/src/data/products.js so UI is always in sync
-function syncFrontendProducts(products) {
-  try {
-    const fePath = path.join(__dirname, '..', 'frontend', 'src', 'data', 'products.js');
-    if (!fs.existsSync(fePath)) return;
-    const content = fs.readFileSync(fePath, 'utf8');
-    const startMarker = 'export const products = ';
-    const endMarker = 'export const consumerProjectTypes = ';
-    const startIdx = content.indexOf(startMarker);
-    const endIdx = content.indexOf(endMarker);
-    if (startIdx !== -1 && endIdx !== -1) {
-      const before = content.substring(0, startIdx);
-      const after = content.substring(endIdx);
-      const updatedProductsJs = `${before}export const products = ${JSON.stringify(products, null, 2)};\n\n${after}`;
-      fs.writeFileSync(fePath, updatedProductsJs, 'utf8');
-      console.log('✅ Synchronized frontend/src/data/products.js');
-    }
-  } catch (err) {
-    console.error('Failed to sync frontend products.js:', err.message);
-  }
+// ─── Convert Supabase row → product object used by frontend ───────────────────
+function rowToProduct(row) {
+  return {
+    id: row.id,
+    name: row.name,
+    brand: row.brand,
+    category: row.category,
+    sizes: row.sizes || '',
+    variants: row.variants || '',
+    material: row.material || '',
+    finish: row.finish || '',
+    features: Array.isArray(row.features) ? row.features : [],
+    suitableFor: row.suitable_for || '',
+    inStock: row.in_stock ?? true,
+    featured: row.featured ?? false,
+    imageSnippet: row.image_snippet || '',
+    image: row.image || '',
+    hsnCode: row.hsn_code || '',
+    mrp: row.mrp || null
+  };
 }
 
-// Local JSON is the ground truth, instantly updated by admin and synced with Supabase
-async function getLiveProducts() {
-  const local = readJson(productsFilePath);
-  return local;
-}
-
-// Background / Awaited Dual-Write to Supabase
-async function dualWriteToSupabase(action, product) {
-  if (!product) return;
-  const combinedSizes = product.variants 
-    ? (product.sizes ? `${product.sizes} (Variants: ${product.variants})` : product.variants)
-    : (product.sizes || '');
-
-  const dbItem = {
+// ─── Convert product object → Supabase row ────────────────────────────────────
+function productToRow(product) {
+  return {
     id: product.id,
     name: product.name,
     brand: product.brand,
     category: product.category,
-    sizes: combinedSizes,
+    sizes: product.sizes || '',
+    variants: product.variants || '',
     material: product.material || '',
     finish: product.finish || '',
     features: product.features || [],
@@ -111,23 +111,56 @@ async function dualWriteToSupabase(action, product) {
     hsn_code: product.hsnCode || '',
     mrp: product.mrp || null
   };
-
-  try {
-    if (action === 'upsert') {
-      const { error } = await supabase.from('products').upsert(dbItem, { onConflict: 'id' });
-      if (error && !error.message.includes('Could not find the table')) {
-        console.warn('Supabase upsert note:', error.message);
-      }
-    } else if (action === 'delete') {
-      const { error } = await supabase.from('products').delete().eq('id', product.id);
-      if (error) {
-        console.warn('Supabase delete note:', error.message);
-      }
-    }
-  } catch (err) {
-    console.warn('Supabase dualWrite error:', err.message);
-  }
 }
+
+// ─── Primary data source: Supabase on Vercel, local JSON in dev ───────────────
+async function getLiveProducts() {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .order('name', { ascending: true });
+
+  if (!error && data && data.length > 0) {
+    return data.map(rowToProduct);
+  }
+
+  // Fallback to local JSON (local dev when Supabase is unreachable)
+  console.warn('Supabase read failed, falling back to local JSON:', error?.message);
+  return readJson(productsFilePath);
+}
+
+// ─── Upsert a product into Supabase ──────────────────────────────────────────
+async function supabaseUpsert(product) {
+  const row = productToRow(product);
+  const { error } = await supabase.from('products').upsert(row, { onConflict: 'id' });
+  if (error) console.warn('Supabase upsert error:', error.message);
+  return !error;
+}
+
+// ─── Delete a product from Supabase ──────────────────────────────────────────
+async function supabaseDelete(id) {
+  const { error } = await supabase.from('products').delete().eq('id', id);
+  if (error) console.warn('Supabase delete error:', error.message);
+  return !error;
+}
+
+// ─── Helper: Update category counts in local JSON (dev only) ─────────────────
+function updateCategoryCounts(products) {
+  if (IS_VERCEL) return;
+  const categories = readJson(categoriesFilePath);
+  categories.forEach(cat => {
+    if (cat.id === 'all') {
+      cat.count = products.length;
+    } else {
+      cat.count = products.filter(p => p.category === cat.id).length;
+    }
+  });
+  writeJson(categoriesFilePath, categories);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PUBLIC API ROUTES
+// ─────────────────────────────────────────────────────────────────────────────
 
 // 1. Health check
 app.get('/api/health', (req, res) => {
@@ -135,11 +168,12 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     store: 'Shantinath Traders API',
     uptime: process.uptime(),
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    mode: IS_VERCEL ? 'vercel-supabase' : 'local-json'
   });
 });
 
-// 2. Shop Details & Contact Info
+// 2. Shop Details
 app.get('/api/shop', (req, res) => {
   const shopData = readJson(shopFilePath);
   res.json(shopData);
@@ -152,15 +186,15 @@ app.get('/api/categories', (req, res) => {
 });
 
 // 4. Unique Brands List
-app.get('/api/brands', (req, res) => {
-  const products = readJson(productsFilePath);
+app.get('/api/brands', async (req, res) => {
+  const products = await getLiveProducts();
   const brandsSet = new Set();
   products.forEach(p => {
     if (p.brand) {
-      p.brand.split(' / ').forEach(b => brandsSet.add(b.trim()));
+      p.brand.split(/[,|/]/).forEach(b => brandsSet.add(b.trim()));
     }
   });
-  res.json(Array.from(brandsSet));
+  res.json(Array.from(brandsSet).sort());
 });
 
 // 5. Products Catalog with Search & Filtering
@@ -171,45 +205,46 @@ app.get('/api/products', async (req, res) => {
   if (category && category !== 'all') {
     products = products.filter(p => p.category === category);
   }
-
   if (brand && brand !== 'all') {
-    products = products.filter(p => p.brand.toLowerCase().includes(brand.toLowerCase()));
+    products = products.filter(p => p.brand && p.brand.toLowerCase().includes(brand.toLowerCase()));
   }
-
   if (featured === 'true') {
     products = products.filter(p => p.featured === true);
   }
-
   if (search) {
     const q = search.toLowerCase().trim();
-    products = products.filter(p => 
+    products = products.filter(p =>
       p.name.toLowerCase().includes(q) ||
-      p.brand.toLowerCase().includes(q) ||
+      (p.brand && p.brand.toLowerCase().includes(q)) ||
       p.category.toLowerCase().includes(q) ||
       (p.suitableFor && p.suitableFor.toLowerCase().includes(q)) ||
       (p.sizes && p.sizes.toLowerCase().includes(q))
     );
   }
 
-  res.json({
-    total: products.length,
-    products
-  });
+  res.json({ total: products.length, products });
 });
 
 // 6. Single Product by ID
-app.get('/api/products/:id', (req, res) => {
-  const products = readJson(productsFilePath);
-  const product = products.find(p => p.id === req.params.id);
+app.get('/api/products/:id', async (req, res) => {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*')
+    .eq('id', req.params.id)
+    .single();
 
-  if (!product) {
-    return res.status(404).json({ error: 'Product not found' });
+  if (error || !data) {
+    // Fallback to local JSON
+    const products = readJson(productsFilePath);
+    const product = products.find(p => p.id === req.params.id);
+    if (!product) return res.status(404).json({ error: 'Product not found' });
+    return res.json(product);
   }
 
-  res.json(product);
+  res.json(rowToProduct(data));
 });
 
-// 7. Submit Home Shopping List / Customer Inquiry
+// 7. Submit Home Shopping List
 app.post('/api/shopping-list', (req, res) => {
   const { customerName, phone, deliveryOption, deliveryAddress, items } = req.body;
 
@@ -217,7 +252,6 @@ app.post('/api/shopping-list', (req, res) => {
     return res.status(400).json({ error: 'Please provide items list' });
   }
 
-  const inquiries = readJson(inquiriesFilePath);
   const newInquiry = {
     id: `INQ-${Date.now()}`,
     customerName: customerName || 'Retail Customer',
@@ -229,24 +263,20 @@ app.post('/api/shopping-list', (req, res) => {
     status: 'pending_confirmation'
   };
 
+  // Try to persist locally (dev only)
+  const inquiries = readJson(inquiriesFilePath);
   inquiries.unshift(newInquiry);
   writeJson(inquiriesFilePath, inquiries);
 
-  // Generate WhatsApp message and redirect URL
   const shopData = readJson(shopFilePath);
   const waNumber = shopData.whatsappNumber || '917007561887';
   const waMessage = `*HOME SHOPPING LIST - SHANTINATH TRADERS (JHANSI)*\n*Reference ID:* ${newInquiry.id}\n*Customer:* ${newInquiry.customerName}\n*Preference:* ${newInquiry.deliveryOption}\n${newInquiry.deliveryAddress ? `*Location:* ${newInquiry.deliveryAddress}\n` : ''}\n*Items Needed:*\n${newInquiry.items}\n\n_Please confirm stock and total price._`;
   const whatsappUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
-  res.status(201).json({
-    success: true,
-    message: 'Shopping list recorded successfully',
-    inquiry: newInquiry,
-    whatsappUrl
-  });
+  res.status(201).json({ success: true, message: 'Shopping list recorded successfully', inquiry: newInquiry, whatsappUrl });
 });
 
-// Contact Form Inquiry (Anteena Eximp Style)
+// 8. Contact Form Inquiry
 app.post('/api/inquiries', (req, res) => {
   const { name, email, phone, city, subject, message } = req.body;
 
@@ -254,7 +284,6 @@ app.post('/api/inquiries', (req, res) => {
     return res.status(400).json({ error: 'Please provide name and message' });
   }
 
-  const inquiries = readJson(inquiriesFilePath);
   const newInquiry = {
     id: `INQ-${Date.now()}`,
     customerName: name.trim(),
@@ -268,10 +297,11 @@ app.post('/api/inquiries', (req, res) => {
     status: 'pending_confirmation'
   };
 
+  const inquiries = readJson(inquiriesFilePath);
   inquiries.unshift(newInquiry);
   writeJson(inquiriesFilePath, inquiries);
 
-  // Background Dual-write to Supabase inquiries table (Non-blocking)
+  // Background write to Supabase
   supabase.from('inquiries').insert([{
     id: newInquiry.id,
     customer_name: newInquiry.customerName,
@@ -284,7 +314,7 @@ app.post('/api/inquiries', (req, res) => {
     status: newInquiry.status,
     created_at: newInquiry.createdAt
   }]).then(({ error }) => {
-    if (error) console.warn('Supabase inquiry dual-write note:', error.message);
+    if (error) console.warn('Supabase inquiry write note:', error.message);
   }).catch(() => {});
 
   const shopData = readJson(shopFilePath);
@@ -292,80 +322,51 @@ app.post('/api/inquiries', (req, res) => {
   const waMessage = `*NEW INQUIRY - SHANTINATH TRADERS (SADAR BAZAR)*\n*Reference ID:* ${newInquiry.id}\n*Name:* ${newInquiry.customerName}\n*Phone:* ${newInquiry.phone || 'Not provided'}\n*Email:* ${newInquiry.email || 'Not provided'}${newInquiry.city ? `\n*City:* ${newInquiry.city}` : ''}\n*Subject:* ${newInquiry.subject}\n*Message:*\n${newInquiry.items}\n\n_Please confirm availability and pricing._`;
   const whatsappUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
 
-  res.status(201).json({
-    success: true,
-    message: 'Inquiry submitted successfully',
-    inquiry: newInquiry,
-    whatsappUrl
-  });
+  res.status(201).json({ success: true, message: 'Inquiry submitted successfully', inquiry: newInquiry, whatsappUrl });
 });
 
-// 8. Get Inquiries (Counter View)
+// 9. Get Inquiries
 app.get('/api/inquiries', (req, res) => {
   const inquiries = readJson(inquiriesFilePath);
-  res.json({
-    total: inquiries.length,
-    inquiries
-  });
+  res.json({ total: inquiries.length, inquiries });
 });
 
-// Serve uploaded images statically
+// Serve uploaded images statically (local dev)
 app.use('/images', express.static(path.join(__dirname, '..', 'frontend', 'public', 'images')));
 
-// Helper: Update category counts
-function updateCategoryCounts(products) {
-  const categories = readJson(categoriesFilePath);
-  categories.forEach(cat => {
-    if (cat.id === 'all') {
-      cat.count = products.length;
-    } else {
-      cat.count = products.filter(p => p.category === cat.id).length;
-    }
-  });
-  writeJson(categoriesFilePath, categories);
-}
+// ─────────────────────────────────────────────────────────────────────────────
+// ADMIN API ROUTES — All writes go directly to Supabase
+// ─────────────────────────────────────────────────────────────────────────────
 
-// ============================================
-// ADMIN API ROUTES
-// ============================================
-
-// 9. Admin: Add New Product
+// 10. Admin: Add New Product
 app.post('/api/admin/products', upload.single('image'), async (req, res) => {
   try {
-    const products = readJson(productsFilePath);
     let { id, name, brand, category, sizes, variants, material, finish, features, suitableFor, inStock, featured, imageSnippet } = req.body;
 
     if (!name || !brand || !category) {
       return res.status(400).json({ error: 'Missing required fields: name, brand, category' });
     }
 
-    // Auto-generate clean slug ID if not explicitly provided
+    // Auto-generate or sanitize ID
     if (!id || !id.trim()) {
       let baseId = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50);
       if (!baseId) baseId = 'product';
       id = baseId;
-      let counter = 1;
-      while (products.some(p => p.id.toLowerCase() === id.toLowerCase())) {
-        id = `${baseId}-${counter}`;
-        counter++;
-      }
     } else {
       id = id.trim().toLowerCase().replace(/[^a-z0-9-_]+/g, '-');
-      let baseId = id;
-      let counter = 1;
-      while (products.some(p => p.id.toLowerCase() === id.toLowerCase())) {
-        id = `${baseId}-${counter}`;
-        counter++;
-      }
     }
 
-    // Check duplicate Product Name under the same brand (case-insensitive & trimmed)
-    const normalizedName = name.trim().toLowerCase();
-    const duplicateProduct = products.find(p => p.name.trim().toLowerCase() === normalizedName && p.brand.trim().toLowerCase() === brand.trim().toLowerCase());
-    if (duplicateProduct) {
-      return res.status(409).json({
-        error: `Duplicate product error: "${duplicateProduct.name}" already exists under brand "${duplicateProduct.brand}".`
-      });
+    // Check for duplicate ID in Supabase
+    const { data: existing } = await supabase.from('products').select('id').eq('id', id).single();
+    if (existing) {
+      let counter = 1;
+      const baseId = id;
+      while (true) {
+        const testId = `${baseId}-${counter}`;
+        const { data: conflict } = await supabase.from('products').select('id').eq('id', testId).single();
+        if (!conflict) { id = testId; break; }
+        counter++;
+      }
     }
 
     let parsedFeatures = [];
@@ -394,23 +395,17 @@ app.post('/api/admin/products', upload.single('image'), async (req, res) => {
       image: req.file ? `/images/products/${req.file.filename}` : '/images/products/taparia-adj-spanner.jpg'
     };
 
+    // Write to Supabase (primary)
+    const ok = await supabaseUpsert(newProduct);
+    if (!ok) {
+      return res.status(500).json({ error: 'Failed to save product to database' });
+    }
+
+    // Also write to local JSON (dev fallback)
+    const products = readJson(productsFilePath);
     products.unshift(newProduct);
     writeJson(productsFilePath, products);
-    syncFrontendProducts(products);
-
-    // Update categories count
     updateCategoryCounts(products);
-    invalidateCache();
-
-    // Dual-write to Supabase with timeout guard
-    try {
-      await Promise.race([
-        dualWriteToSupabase('upsert', newProduct),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('Supabase timeout')), 3500))
-      ]);
-    } catch (e) {
-      console.warn('Supabase dual-write non-blocking note:', e.message);
-    }
 
     res.status(201).json({ success: true, product: newProduct });
   } catch (err) {
@@ -419,155 +414,146 @@ app.post('/api/admin/products', upload.single('image'), async (req, res) => {
   }
 });
 
-// 10. Admin: Update Product
+// 11. Admin: Update Product
 app.put('/api/admin/products/:id', upload.single('image'), async (req, res) => {
   try {
-    const products = readJson(productsFilePath);
-    const idx = products.findIndex(p => p.id === req.params.id);
+    const oldId = req.params.id;
 
-    if (idx === -1) {
+    // Fetch current product from Supabase
+    const { data: current, error: fetchErr } = await supabase.from('products').select('*').eq('id', oldId).single();
+    if (fetchErr || !current) {
       return res.status(404).json({ error: 'Product not found' });
     }
 
     const { id: newId, name, brand, category, sizes, variants, material, finish, features, suitableFor, inStock, featured, imageSnippet } = req.body;
 
-    const oldId = req.params.id;
-    const requestedId = newId ? newId.trim().toLowerCase().replace(/[^a-z0-9-_]+/g, '-') : null;
-    let idChanged = false;
+    const requestedId = newId ? newId.trim().toLowerCase().replace(/[^a-z0-9-_]+/g, '-') : oldId;
+    const idChanged = requestedId !== oldId;
 
-    if (requestedId && requestedId !== oldId) {
-      const conflict = products.find(p => p.id === requestedId);
+    // Check ID conflict if changing ID
+    if (idChanged) {
+      const { data: conflict } = await supabase.from('products').select('id').eq('id', requestedId).single();
       if (conflict) {
-        return res.status(409).json({
-          error: `Product ID conflict: A product with ID "${requestedId}" already exists.`
-        });
-      }
-      products[idx].id = requestedId;
-      idChanged = true;
-
-      // If product has a local fallback image named after the old ID, duplicate it for the new ID
-      if (!req.file && products[idx].image === `/images/products/${oldId}.jpg`) {
-        const oldImgPath = path.join(__dirname, '../frontend/public/images/products', `${oldId}.jpg`);
-        const newImgPath = path.join(__dirname, '../frontend/public/images/products', `${requestedId}.jpg`);
-        if (fs.existsSync(oldImgPath)) {
-          try {
-            fs.copyFileSync(oldImgPath, newImgPath);
-            products[idx].image = `/images/products/${requestedId}.jpg`;
-          } catch (e) {
-            console.warn('Could not copy image file for new ID:', e.message);
-          }
-        }
+        return res.status(409).json({ error: `Product ID conflict: "${requestedId}" already exists.` });
       }
     }
 
-    if (name) {
-      const normalizedName = name.trim().toLowerCase();
-      const duplicateProduct = products.find(p => p.id !== (requestedId || oldId) && p.name.trim().toLowerCase() === normalizedName);
-      if (duplicateProduct) {
-        return res.status(409).json({
-          error: `Duplicate product error: Another product named "${duplicateProduct.name}" already exists under brand "${duplicateProduct.brand}".`
-        });
-      }
-      products[idx].name = name;
-    }
-    if (brand) products[idx].brand = brand;
-    if (category) products[idx].category = category;
-    if (sizes !== undefined) products[idx].sizes = sizes;
-    if (variants !== undefined) products[idx].variants = variants;
-    if (material !== undefined) products[idx].material = material;
-    if (finish !== undefined) products[idx].finish = finish;
+    let parsedFeatures = current.features;
     if (features !== undefined) {
       try {
-        products[idx].features = typeof features === 'string' ? JSON.parse(features) : features;
+        parsedFeatures = typeof features === 'string' ? JSON.parse(features) : features;
       } catch (e) {
-        products[idx].features = typeof features === 'string' ? features.split('\n').filter(f => f.trim()) : [];
+        parsedFeatures = typeof features === 'string' ? features.split('\n').filter(f => f.trim()) : [];
       }
     }
-    if (suitableFor !== undefined) products[idx].suitableFor = suitableFor;
-    if (inStock !== undefined) products[idx].inStock = inStock === 'true' || inStock === true;
-    if (featured !== undefined) products[idx].featured = featured === 'true' || featured === true;
-    if (imageSnippet !== undefined) products[idx].imageSnippet = imageSnippet;
-    if (req.file) products[idx].image = `/images/products/${req.file.filename}`;
 
-    writeJson(productsFilePath, products);
-    syncFrontendProducts(products);
-    updateCategoryCounts(products);
-    invalidateCache();
+    const updatedProduct = {
+      id: requestedId,
+      name: name || current.name,
+      brand: brand || current.brand,
+      category: category || current.category,
+      sizes: sizes !== undefined ? sizes : (current.sizes || ''),
+      variants: variants !== undefined ? variants : (current.variants || ''),
+      material: material !== undefined ? material : (current.material || ''),
+      finish: finish !== undefined ? finish : (current.finish || ''),
+      features: parsedFeatures,
+      suitableFor: suitableFor !== undefined ? suitableFor : (current.suitable_for || ''),
+      inStock: inStock !== undefined ? (inStock === 'true' || inStock === true) : current.in_stock,
+      featured: featured !== undefined ? (featured === 'true' || featured === true) : current.featured,
+      imageSnippet: imageSnippet !== undefined ? imageSnippet : (current.image_snippet || ''),
+      image: req.file ? `/images/products/${req.file.filename}` : (current.image || ''),
+      hsnCode: current.hsn_code || '',
+      mrp: current.mrp || null
+    };
 
-    // Dual-write to Supabase safely
-    try {
-      if (idChanged) {
-        await dualWriteToSupabase('delete', { id: oldId });
-      }
-      await Promise.race([
-        dualWriteToSupabase('upsert', products[idx]),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('Supabase timeout')), 3500))
-      ]);
-    } catch (e) {
-      console.warn('Supabase dual-write update note:', e.message);
+    if (idChanged) {
+      // Delete old row, insert new one with new ID
+      await supabaseDelete(oldId);
+    }
+    const ok = await supabaseUpsert(updatedProduct);
+    if (!ok) {
+      return res.status(500).json({ error: 'Failed to update product in database' });
     }
 
-    res.json({ success: true, product: products[idx] });
+    // Sync to local JSON
+    const products = readJson(productsFilePath);
+    const idx = products.findIndex(p => p.id === oldId);
+    if (idx !== -1) {
+      products[idx] = updatedProduct;
+      writeJson(productsFilePath, products);
+      updateCategoryCounts(products);
+    }
+
+    res.json({ success: true, product: updatedProduct });
   } catch (err) {
     console.error('Error updating product:', err);
     res.status(500).json({ error: 'Failed to update product' });
   }
 });
 
-// 11. Admin: Delete Product
+// 12. Admin: Delete Product
 app.delete('/api/admin/products/:id', async (req, res) => {
   try {
-    let products = readJson(productsFilePath);
-    const idx = products.findIndex(p => p.id === req.params.id);
+    const id = req.params.id;
 
-    if (idx === -1) {
+    // Check product exists
+    const { data: existing, error: fetchErr } = await supabase.from('products').select('id, name').eq('id', id).single();
+    if (fetchErr || !existing) {
       return res.status(404).json({ error: 'Product not found' });
     }
 
-    const deleted = products.splice(idx, 1)[0];
+    const ok = await supabaseDelete(id);
+    if (!ok) {
+      return res.status(500).json({ error: 'Failed to delete product from database' });
+    }
 
-    writeJson(productsFilePath, products);
-    syncFrontendProducts(products);
-    updateCategoryCounts(products);
-    invalidateCache();
-    await dualWriteToSupabase('delete', deleted);
+    // Sync to local JSON
+    const products = readJson(productsFilePath);
+    const filtered = products.filter(p => p.id !== id);
+    writeJson(productsFilePath, filtered);
+    updateCategoryCounts(filtered);
 
-    res.json({ success: true, message: `Product "${deleted.name}" deleted successfully` });
+    res.json({ success: true, message: `Product "${existing.name}" deleted successfully` });
   } catch (err) {
     console.error('Error deleting product:', err);
     res.status(500).json({ error: 'Failed to delete product' });
   }
 });
 
-// 12. Admin: Toggle Product Stock / Featured
+// 13. Admin: Toggle Product Stock / Featured
 app.patch('/api/admin/products/:id', async (req, res) => {
   try {
-    const products = readJson(productsFilePath);
-    const idx = products.findIndex(p => p.id === req.params.id);
+    const id = req.params.id;
+    const { inStock, featured } = req.body;
 
-    if (idx === -1) {
-      return res.status(404).json({ error: 'Product not found' });
+    const updatePayload = {};
+    if (inStock !== undefined) updatePayload.in_stock = inStock;
+    if (featured !== undefined) updatePayload.featured = featured;
+
+    const { data, error } = await supabase.from('products').update(updatePayload).eq('id', id).select().single();
+    if (error || !data) {
+      return res.status(404).json({ error: 'Product not found or update failed' });
     }
 
-    const { inStock, featured } = req.body;
-    if (inStock !== undefined) products[idx].inStock = inStock;
-    if (featured !== undefined) products[idx].featured = featured;
+    // Sync to local JSON
+    const products = readJson(productsFilePath);
+    const idx = products.findIndex(p => p.id === id);
+    if (idx !== -1) {
+      if (inStock !== undefined) products[idx].inStock = inStock;
+      if (featured !== undefined) products[idx].featured = featured;
+      writeJson(productsFilePath, products);
+    }
 
-    writeJson(productsFilePath, products);
-    syncFrontendProducts(products);
-    invalidateCache();
-    await dualWriteToSupabase('upsert', products[idx]);
-
-    res.json({ success: true, product: products[idx] });
+    res.json({ success: true, product: rowToProduct(data) });
   } catch (err) {
     console.error('Error patching product:', err);
     res.status(500).json({ error: 'Failed to update product' });
   }
 });
 
-// 13. Admin: Dashboard Stats
-app.get('/api/admin/stats', (req, res) => {
-  const products = readJson(productsFilePath);
+// 14. Admin: Dashboard Stats
+app.get('/api/admin/stats', async (req, res) => {
+  const products = await getLiveProducts();
   const categories = readJson(categoriesFilePath);
   const inquiries = readJson(inquiriesFilePath);
 
@@ -578,24 +564,21 @@ app.get('/api/admin/stats', (req, res) => {
   const totalInquiries = inquiries.length;
   const pendingInquiries = inquiries.filter(i => i.status === 'pending_confirmation').length;
 
-  // Products per category
   const categoryBreakdown = {};
   products.forEach(p => {
     categoryBreakdown[p.category] = (categoryBreakdown[p.category] || 0) + 1;
   });
 
-  // Products per brand
   const brandBreakdown = {};
   products.forEach(p => {
     if (p.brand) {
-      p.brand.split(' / ').forEach(b => {
-        const brandName = b.trim();
-        brandBreakdown[brandName] = (brandBreakdown[brandName] || 0) + 1;
+      p.brand.split(/[,|/]/).forEach(b => {
+        const bn = b.trim();
+        if (bn) brandBreakdown[bn] = (brandBreakdown[bn] || 0) + 1;
       });
     }
   });
 
-  // Recent inquiries (last 10)
   const recentInquiries = inquiries.slice(0, 10);
 
   res.json({
@@ -612,37 +595,24 @@ app.get('/api/admin/stats', (req, res) => {
   });
 });
 
-// 14. Admin: Supabase Health & Free Tier Status
+// 15. Admin: Supabase Status
 app.get('/api/admin/supabase-status', async (req, res) => {
   try {
     const { count, error } = await supabase.from('products').select('*', { count: 'exact', head: true });
     if (error) {
-      return res.json({
-        connected: false,
-        error: error.message,
-        tableCreated: !error.message.includes('Could not find the table'),
-        sqlRequired: error.message.includes('Could not find the table'),
-        freeTierGuardsActive: true
-      });
+      return res.json({ connected: false, error: error.message });
     }
-    res.json({
-      connected: true,
-      tableCreated: true,
-      productCount: count,
-      freeTierGuardsActive: true
-    });
+    res.json({ connected: true, tableCreated: true, productCount: count });
   } catch (err) {
-    res.json({ connected: false, error: err.message, freeTierGuardsActive: true });
+    res.json({ connected: false, error: err.message });
   }
 });
 
 // Start Server
 app.listen(PORT, () => {
   console.log(`✅ Shantinath Traders Backend running on http://localhost:${PORT}`);
-  console.log(`📡 Health Check: http://localhost:${PORT}/api/health`);
+  console.log(`📡 Mode: ${IS_VERCEL ? 'Vercel + Supabase (primary)' : 'Local + JSON fallback'}`);
   console.log(`📦 Products API: http://localhost:${PORT}/api/products`);
 });
 
 export default app;
-
-
