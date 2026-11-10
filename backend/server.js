@@ -415,7 +415,18 @@ app.post('/api/admin/products', upload.single('image'), async (req, res) => {
 });
 
 // 11. Admin: Update Product
-app.put('/api/admin/products/:id', upload.single('image'), async (req, res) => {
+// Accepts JSON (no image) or multipart/form-data (with image upload)
+// Using a middleware that runs multer only when Content-Type is multipart
+const conditionalUpload = (req, res, next) => {
+  const ct = req.headers['content-type'] || '';
+  if (ct.includes('multipart/form-data')) {
+    upload.single('image')(req, res, next);
+  } else {
+    next();
+  }
+};
+
+app.put('/api/admin/products/:id', conditionalUpload, async (req, res) => {
   try {
     const oldId = req.params.id;
 
@@ -441,7 +452,7 @@ app.put('/api/admin/products/:id', upload.single('image'), async (req, res) => {
     let parsedFeatures = current.features;
     if (features !== undefined) {
       try {
-        parsedFeatures = typeof features === 'string' ? JSON.parse(features) : features;
+        parsedFeatures = Array.isArray(features) ? features : (typeof features === 'string' ? JSON.parse(features) : features);
       } catch (e) {
         parsedFeatures = typeof features === 'string' ? features.split('\n').filter(f => f.trim()) : [];
       }
@@ -467,7 +478,6 @@ app.put('/api/admin/products/:id', upload.single('image'), async (req, res) => {
     };
 
     if (idChanged) {
-      // Delete old row, insert new one with new ID
       await supabaseDelete(oldId);
     }
     const ok = await supabaseUpsert(updatedProduct);
@@ -475,7 +485,7 @@ app.put('/api/admin/products/:id', upload.single('image'), async (req, res) => {
       return res.status(500).json({ error: 'Failed to update product in database' });
     }
 
-    // Sync to local JSON
+    // Sync to local JSON (dev only)
     const products = readJson(productsFilePath);
     const idx = products.findIndex(p => p.id === oldId);
     if (idx !== -1) {
