@@ -643,3 +643,6 @@ app.listen(PORT, () => {
   console.log(`📦 Products API: http://localhost:${PORT}/api/products`);
 });
 
+export default app;
+
+
