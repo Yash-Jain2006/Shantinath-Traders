@@ -200,48 +200,6 @@ function DashboardView({ stats, onNavigate }) {
 
   return (
     <div>
-      {/* Supabase Free Tier Guard Status Banner */}
-      <div style={{
-        background: '#ffffff', borderRadius: '14px', padding: '1.25rem 1.5rem',
-        border: '1px solid #e2e8f0', marginBottom: '1.5rem',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-          <div style={{
-            width: '42px', height: '42px', borderRadius: '10px',
-            background: '#ecfdf5', border: '1px solid #a7f3d0',
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-          }}>
-            <Database size={20} color="#059669" />
-          </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <h4 style={{ margin: 0, fontSize: '0.98rem', fontWeight: 700, color: '#0f172a' }}>
-                Cloud Database Architecture: Supabase Active
-              </h4>
-              <span style={{
-                fontSize: '0.72rem', background: '#ecfdf5', color: '#065f46',
-                padding: '0.15rem 0.55rem', borderRadius: '6px', fontWeight: 700
-              }}>
-                Free Tier Protected
-              </span>
-            </div>
-            <p style={{ margin: '3px 0 0', fontSize: '0.82rem', color: '#64748b' }}>
-              Dual-Engine Sync · In-Memory Cache (5m TTL) · Local JSON Failover · Quota Safe
-            </p>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: '0.65rem' }}>
-          <span style={{
-            fontSize: '0.78rem', color: '#475569', background: '#f8fafc',
-            padding: '0.45rem 0.85rem', borderRadius: '8px', border: '1px solid #e2e8f0'
-          }}>
-            Project Ref: <code style={{ fontWeight: 700, color: '#0f172a' }}>wxjlzlmvofggkpprsyxw</code>
-          </span>
-        </div>
-      </div>
-
       {/* Stat Cards */}
       <div style={{
         display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(195px, 1fr))',
@@ -840,15 +798,25 @@ function ProductForm({ mode, product, existingProducts = [], onSuccess }) {
     );
   }, [trimmedName, form.brand, existingProducts, mode, product]);
 
-  const categories = [
+  const [categories, setCategories] = useState([
     { id: 'hand-tools', name: 'Hand Tools' },
-    { id: 'power-tools', name: 'Power Tools' },
+    { id: 'power-tools', name: 'Machine & Power Tools' },
     { id: 'paints', name: 'Paints & Enamels' },
-    { id: 'locks', name: 'Locks & Security' },
-    { id: 'adhesives', name: 'Adhesives & Oils' },
-    { id: 'garden', name: 'Garden & Plumbing' },
-    { id: 'abrasives', name: 'Cutting & Sanding' },
-  ];
+    { id: 'locks', name: 'Pad Locks' },
+    { id: 'adhesives', name: 'Adhesives & Sprays' },
+    { id: 'garden', name: 'Gardening & Pipes' },
+    { id: 'abrasives', name: 'Pipe Fittings' },
+  ]);
+
+  useEffect(() => {
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+        const filtered = (data || []).filter(c => c.id !== 'all');
+        if (filtered.length > 0) setCategories(filtered);
+      })
+      .catch(() => { /* keep fallback */ });
+  }, []);
 
   const handleChange = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
