@@ -35,8 +35,16 @@ export default function ProductsPage({ onBackToHome, initialCategory = 'all' }) 
 
   // Extract unique brands
   const uniqueBrands = useMemo(() => {
-    const set = new Set(productList.map(p => p.brand.split(' / ')[0]));
-    return ['all', ...Array.from(set)];
+    const set = new Set();
+    productList.forEach(p => {
+      if (p.brand) {
+        p.brand.split(/[,|/]/).forEach(b => {
+          const trimmed = b.trim();
+          if (trimmed) set.add(trimmed);
+        });
+      }
+    });
+    return ['all', ...Array.from(set).sort((a, b) => a.localeCompare(b))];
   }, [productList]);
 
   // Filter and sort products

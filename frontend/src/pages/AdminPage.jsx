@@ -1229,6 +1229,34 @@ function InquiriesView({ stats }) {
                   )}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <button
+                    onClick={async () => {
+                      const nextStatus = inq.status === 'pending_confirmation' ? 'resolved' : 'pending_confirmation';
+                      try {
+                        await fetch(`${API_BASE}/inquiries/${inq.id}`, {
+                          method: 'PATCH',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ status: nextStatus })
+                        });
+                        setInquiries(prev => prev.map(item => item.id === inq.id ? { ...item, status: nextStatus } : item));
+                      } catch (err) {
+                        console.error('Failed to update inquiry status:', err);
+                      }
+                    }}
+                    style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 600,
+                      padding: '0.2rem 0.55rem',
+                      borderRadius: '6px',
+                      border: '1px solid #cbd5e1',
+                      background: '#fff',
+                      cursor: 'pointer',
+                      color: '#475569'
+                    }}
+                    title="Click to toggle status"
+                  >
+                    {inq.status === 'pending_confirmation' ? 'Mark Resolved' : 'Mark Pending'}
+                  </button>
                   <span style={{
                     fontSize: '0.72rem', fontWeight: 700, padding: '0.2rem 0.55rem', borderRadius: '6px',
                     background: inq.status === 'pending_confirmation' ? '#fffbeb' : '#ecfdf5',

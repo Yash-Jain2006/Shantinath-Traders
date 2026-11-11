@@ -144,6 +144,35 @@ async function supabaseDelete(id) {
   return !error;
 }
 
+// ─── Primary inquiries data source: Supabase on Vercel, local JSON fallback ──
+async function getLiveInquiries() {
+  try {
+    const { data, error } = await supabase
+      .from('inquiries')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (!error && Array.isArray(data) && data.length > 0) {
+      return data.map(row => ({
+        id: row.id,
+        customerName: row.customer_name || 'Retail Customer',
+        phone: row.phone || '',
+        email: row.email || '',
+        city: row.city || '',
+        subject: row.subject || 'Product Inquiry',
+        deliveryOption: row.delivery_option || 'Quick Pickup at Sadar Bazar Store',
+        deliveryAddress: row.delivery_address || '',
+        items: row.items || '',
+        status: row.status || 'pending_confirmation',
+        createdAt: row.created_at
+      }));
+    }
+  } catch (e) {
+    console.warn('Error reading inquiries from Supabase:', e.message);
+  }
+  return readJson(inquiriesFilePath);
+}
+
 // ─── Helper: Update category counts in local JSON (dev only) ─────────────────
 function updateCategoryCounts(products) {
   if (IS_VERCEL) return;
@@ -179,10 +208,15 @@ app.get('/api/shop', (req, res) => {
   res.json(shopData);
 });
 
-// 3. Categories List
-app.get('/api/categories', (req, res) => {
+// 3. Categories List (Dynamic count matched to live catalog)
+app.get('/api/categories', async (req, res) => {
   const categories = readJson(categoriesFilePath);
-  res.json(categories);
+  const products = await getLiveProducts();
+  const withCounts = categories.map(cat => ({
+    ...cat,
+    count: cat.id === 'all' ? products.length : products.filter(p => p.category === cat.id).length
+  }));
+  res.json(withCounts);
 });
 
 // 4. Unique Brands List
@@ -245,7 +279,7 @@ app.get('/api/products/:id', async (req, res) => {
 });
 
 // 7. Submit Home Shopping List
-app.post('/api/shopping-list', (req, res) => {
+app.post('/api/shopping-list', async (req, res) => {
   const { customerName, phone, deliveryOption, deliveryAddress, items } = req.body;
 
   if (!items || !items.trim()) {
@@ -263,6 +297,22 @@ app.post('/api/shopping-list', (req, res) => {
     status: 'pending_confirmation'
   };
 
+  // Sync to Supabase
+  try {
+    await supabase.from('inquiries').insert([{
+      id: newInquiry.id,
+      customer_name: newInquiry.customerName,
+      phone: newInquiry.phone,
+      delivery_option: newInquiry.deliveryOption,
+      delivery_address: newInquiry.deliveryAddress,
+      items: newInquiry.items,
+      status: newInquiry.status,
+      created_at: newInquiry.createdAt
+    }]);
+  } catch (err) {
+    console.warn('Supabase shopping-list write note:', err.message);
+  }
+
   // Try to persist locally (dev only)
   const inquiries = readJson(inquiriesFilePath);
   inquiries.unshift(newInquiry);
@@ -277,7 +327,7 @@ app.post('/api/shopping-list', (req, res) => {
 });
 
 // 8. Contact Form Inquiry
-app.post('/api/inquiries', (req, res) => {
+app.post('/api/inquiries', async (req, res) => {
   const { name, email, phone, city, subject, message } = req.body;
 
   if (!name || !message) {
@@ -297,25 +347,27 @@ app.post('/api/inquiries', (req, res) => {
     status: 'pending_confirmation'
   };
 
+  // Sync to Supabase
+  try {
+    await supabase.from('inquiries').insert([{
+      id: newInquiry.id,
+      customer_name: newInquiry.customerName,
+      phone: newInquiry.phone,
+      email: newInquiry.email,
+      city: newInquiry.city,
+      subject: newInquiry.subject,
+      delivery_option: newInquiry.deliveryOption,
+      items: newInquiry.items,
+      status: newInquiry.status,
+      created_at: newInquiry.createdAt
+    }]);
+  } catch (err) {
+    console.warn('Supabase inquiry write note:', err.message);
+  }
+
   const inquiries = readJson(inquiriesFilePath);
   inquiries.unshift(newInquiry);
   writeJson(inquiriesFilePath, inquiries);
-
-  // Background write to Supabase
-  supabase.from('inquiries').insert([{
-    id: newInquiry.id,
-    customer_name: newInquiry.customerName,
-    phone: newInquiry.phone,
-    email: newInquiry.email,
-    city: newInquiry.city,
-    subject: newInquiry.subject,
-    delivery_option: newInquiry.deliveryOption,
-    items: newInquiry.items,
-    status: newInquiry.status,
-    created_at: newInquiry.createdAt
-  }]).then(({ error }) => {
-    if (error) console.warn('Supabase inquiry write note:', error.message);
-  }).catch(() => {});
 
   const shopData = readJson(shopFilePath);
   const waNumber = shopData.whatsappNumber || '917007561887';
@@ -325,10 +377,27 @@ app.post('/api/inquiries', (req, res) => {
   res.status(201).json({ success: true, message: 'Inquiry submitted successfully', inquiry: newInquiry, whatsappUrl });
 });
 
-// 9. Get Inquiries
-app.get('/api/inquiries', (req, res) => {
-  const inquiries = readJson(inquiriesFilePath);
+// 9. Get Inquiries (Reads from live Supabase)
+app.get('/api/inquiries', async (req, res) => {
+  const inquiries = await getLiveInquiries();
   res.json({ total: inquiries.length, inquiries });
+});
+
+// 9b. Update Inquiry Status (Pending -> Resolved)
+app.patch('/api/inquiries/:id', async (req, res) => {
+  const { status } = req.body;
+  const id = req.params.id;
+  try {
+    await supabase.from('inquiries').update({ status }).eq('id', id);
+  } catch (err) {}
+
+  const inquiries = readJson(inquiriesFilePath);
+  const found = inquiries.find(i => i.id === id);
+  if (found) {
+    found.status = status;
+    writeJson(inquiriesFilePath, inquiries);
+  }
+  res.json({ success: true, status });
 });
 
 // Serve uploaded images statically (local dev)
@@ -565,7 +634,7 @@ app.patch('/api/admin/products/:id', async (req, res) => {
 app.get('/api/admin/stats', async (req, res) => {
   const products = await getLiveProducts();
   const categories = readJson(categoriesFilePath);
-  const inquiries = readJson(inquiriesFilePath);
+  const inquiries = await getLiveInquiries();
 
   const totalProducts = products.length;
   const inStockCount = products.filter(p => p.inStock).length;
