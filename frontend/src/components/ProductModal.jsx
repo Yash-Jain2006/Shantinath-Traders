@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Check, ShieldCheck, Tag, Box, ArrowRight, MessageSquare, Phone } from 'lucide-react';
+import { X, Check, ShieldCheck, Tag, Box, ArrowRight, MessageSquare, Phone, Image as ImageIcon } from 'lucide-react';
 import { shopDetails } from '../data/shop';
 
 export default function ProductModal({ product, onClose }) {
@@ -9,60 +9,77 @@ export default function ProductModal({ product, onClose }) {
     `Hello Shantinath Traders, I am interested in buying *${product.name}* (Brand: ${product.brand}) for my home. What is the price and is it currently ready at your counter?`
   );
 
-  const imgSrc = product.image || '/images/products/taparia-adj-spanner.jpg';
+  const hasImage = Boolean(product.image && product.image.trim());
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal-box" onClick={(e) => e.stopPropagation()}>
         {/* Product Image Banner - Fully Visible, Framed & Uncropped */}
-        <div style={{
-          position: 'relative',
-          width: '100%',
-          height: '240px',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          marginBottom: '1.25rem',
-          background: 'radial-gradient(circle, #ffffff 65%, #f8fafc 100%)',
-          border: '1.5px solid #e2e8f0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1.25rem',
-          boxSizing: 'border-box'
-        }}>
-          {/* Prominent High-Contrast Close Button */}
-          <button
-            className="modal-close-btn"
-            onClick={onClose}
-            aria-label="Close modal"
-            style={{
-              position: 'absolute',
-              top: '12px',
-              right: '12px',
-              zIndex: 30
-            }}
-          >
-            <X size={20} strokeWidth={2.5} />
-          </button>
+        {hasImage ? (
+          <div style={{
+            position: 'relative',
+            width: '100%',
+            height: '240px',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            marginBottom: '1.25rem',
+            background: 'radial-gradient(circle, #ffffff 65%, #f8fafc 100%)',
+            border: '1.5px solid #e2e8f0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.25rem',
+            boxSizing: 'border-box'
+          }}>
+            {/* Prominent High-Contrast Close Button */}
+            <button
+              className="modal-close-btn"
+              onClick={onClose}
+              aria-label="Close modal"
+              style={{
+                position: 'absolute',
+                top: '12px',
+                right: '12px',
+                zIndex: 30
+              }}
+            >
+              <X size={20} strokeWidth={2.5} />
+            </button>
 
-          <img 
-            src={imgSrc} 
-            alt={product.name} 
-            style={{ 
-              maxWidth: '100%', 
-              maxHeight: '100%', 
-              width: 'auto', 
-              height: 'auto', 
-              objectFit: 'contain',
-              display: 'block',
-              margin: 'auto'
-            }}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = '/images/products/taparia-adj-spanner.jpg';
-            }}
-          />
-        </div>
+            <img 
+              src={product.image} 
+              alt={product.name} 
+              style={{ 
+                maxWidth: '100%', 
+                maxHeight: '100%', 
+                width: 'auto', 
+                height: 'auto', 
+                objectFit: 'contain',
+                display: 'block',
+                margin: 'auto'
+              }}
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
+        ) : (
+          <div style={{
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            marginBottom: '1rem'
+          }}>
+            <button
+              className="modal-close-btn"
+              onClick={onClose}
+              aria-label="Close modal"
+              style={{ position: 'static' }}
+            >
+              <X size={20} strokeWidth={2.5} />
+            </button>
+          </div>
+        )}
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
           <span className="badge badge--amber">{product.brand}</span>

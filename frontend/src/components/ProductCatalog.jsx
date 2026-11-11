@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter, MessageSquare, Info, CheckCircle, ExternalLink, ArrowRight } from 'lucide-react';
+import { Search, Filter, MessageSquare, Info, CheckCircle, ExternalLink, ArrowRight, Image as ImageIcon } from 'lucide-react';
 import {
   products
 } from '../data/products'
@@ -149,15 +149,26 @@ export default function ProductCatalog({ onGoToAllProducts }) {
               <div key={product.id} className="product-card">
                 {/* Product Image Header with Brand Badge */}
                 <div className="product-card__img-box">
-                  <img 
-                    src={product.image || '/images/products/taparia-adj-spanner.jpg'} 
-                    alt={product.name} 
-                    loading="lazy" 
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = '/images/products/taparia-adj-spanner.jpg';
-                    }}
-                  />
+                  {product.image ? (
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      loading="lazy" 
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div style={{
+                      width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
+                      alignItems: 'center', justifyContent: 'center', background: '#f8fafc', color: '#94a3b8'
+                    }}>
+                      <ImageIcon size={36} strokeWidth={1.5} />
+                      <span style={{ fontSize: '0.78rem', fontWeight: 600, marginTop: '0.35rem', color: '#94a3b8' }}>
+                        No Image Available
+                      </span>
+                    </div>
+                  )}
                   <span className="product-card__img-badge-brand">{product.brand}</span>
                   <span className="product-card__img-badge-stock">● In Shop</span>
                 </div>

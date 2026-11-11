@@ -609,14 +609,22 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
                   <td style={{ ...tdStyle, width: '64px' }}>
                     <div style={{
                       width: '52px', height: '52px', borderRadius: '8px', overflow: 'hidden',
-                      border: '1px solid #e2e8f0', background: '#f1f5f9'
+                      border: '1px solid #e2e8f0', background: '#f8fafc',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center'
                     }}>
-                      <img
-                        src={p.image || '/images/products/taparia-adj-spanner.jpg'}
-                        alt={p.name}
-                        style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '2px' }}
-                        onError={e => { e.target.onerror = null; e.target.src = '/images/products/taparia-adj-spanner.jpg'; }}
-                      />
+                      {p.image ? (
+                        <img
+                          src={p.image}
+                          alt={p.name}
+                          style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '2px' }}
+                          onError={e => { e.target.style.display = 'none'; }}
+                        />
+                      ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
+                          <ImageIcon size={18} strokeWidth={1.5} />
+                          <span style={{ fontSize: '0.58rem', fontWeight: 600, marginTop: '1px' }}>No Img</span>
+                        </div>
+                      )}
                     </div>
                   </td>
                   <td style={{ ...tdStyle, textAlign: 'left', fontWeight: 600, color: '#0f172a', maxWidth: '280px' }}>
