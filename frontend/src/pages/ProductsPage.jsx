@@ -201,7 +201,7 @@ export default function ProductsPage({ onBackToHome, initialCategory = 'all' }) 
                 {/* Product Card Image */}
                 <div className="product-card__img-box">
                   <img
-                    src={product.image || `/images/products/${product.id}.jpg`}
+                    src={product.image || '/images/products/taparia-adj-spanner.jpg'}
                     alt={product.name}
                     loading="lazy"
                     onError={(e) => {

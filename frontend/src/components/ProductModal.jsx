@@ -9,7 +9,7 @@ export default function ProductModal({ product, onClose }) {
     `Hello Shantinath Traders, I am interested in buying *${product.name}* (Brand: ${product.brand}) for my home. What is the price and is it currently ready at your counter?`
   );
 
-  const imgSrc = product.image || `/images/products/${product.id}.jpg`;
+  const imgSrc = product.image || '/images/products/taparia-adj-spanner.jpg';
 
   return (
     <div className="modal-backdrop" onClick={onClose}>

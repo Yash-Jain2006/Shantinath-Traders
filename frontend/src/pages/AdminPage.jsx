@@ -612,7 +612,7 @@ function ProductsListView({ products, onDelete, onUpdate, onNavigateAdd, showNot
                       border: '1px solid #e2e8f0', background: '#f1f5f9'
                     }}>
                       <img
-                        src={p.image || `/images/products/${p.id}.jpg`}
+                        src={p.image || '/images/products/taparia-adj-spanner.jpg'}
                         alt={p.name}
                         style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '2px' }}
                         onError={e => { e.target.onerror = null; e.target.src = '/images/products/taparia-adj-spanner.jpg'; }}
@@ -923,7 +923,7 @@ function ProductForm({ mode, product, existingProducts = [], onSuccess }) {
         inStock: form.inStock,
         featured: form.featured,
         imageSnippet: form.imageSnippet,
-        image: imagePreview || product?.image || '/images/products/taparia-adj-spanner.jpg'
+        image: imagePreview ? imagePreview : ''
       };
 
       const res = await fetch(url, {
@@ -1071,37 +1071,71 @@ function ProductForm({ mode, product, existingProducts = [], onSuccess }) {
 
         {/* Image Upload */}
         <div style={{ gridColumn: '1 / -1' }}>
-          <label style={labelStyle}>Product Image</label>
-          <div style={{
-            border: '2px dashed #cbd5e1', borderRadius: '12px', padding: '1.5rem',
-            textAlign: 'center', cursor: 'pointer', background: '#fafbfc',
-            transition: 'all 0.2s'
-          }}
+          <label style={labelStyle}>Product Image (Optional)</label>
+          <div
+            style={{
+              border: '2px dashed #cbd5e1', borderRadius: '12px', padding: '1.25rem 1.5rem',
+              textAlign: 'center', cursor: 'pointer', background: '#fafbfc',
+              transition: 'all 0.2s', position: 'relative'
+            }}
             onClick={() => fileInputRef.current?.click()}
           >
             {imagePreview ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', justifyContent: 'center' }}>
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  style={{ width: '80px', height: '80px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #e2e8f0', background: '#ffffff', padding: '4px' }}
-                  onError={e => { e.target.onerror = null; e.target.src = '/images/products/taparia-adj-spanner.jpg'; }}
-                />
-                <div style={{ textAlign: 'left' }}>
-                  <p style={{ fontSize: '0.88rem', fontWeight: 600, color: '#334155' }}>
-                    {imageFile ? imageFile.name : 'Current image'}
-                  </p>
-                  <p style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Click to change image</p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    style={{ width: '80px', height: '80px', objectFit: 'contain', borderRadius: '10px', border: '1px solid #e2e8f0', background: '#ffffff', padding: '4px' }}
+                    onError={e => { e.target.onerror = null; e.target.src = '/images/products/taparia-adj-spanner.jpg'; }}
+                  />
+                  <div style={{ textAlign: 'left' }}>
+                    <p style={{ fontSize: '0.88rem', fontWeight: 600, color: '#334155' }}>
+                      {imageFile ? imageFile.name : 'Current image'}
+                    </p>
+                    <p style={{ fontSize: '0.78rem', color: '#94a3b8' }}>Click to change image</p>
+                  </div>
                 </div>
+
+                {/* Delete / Remove Image button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setImagePreview('');
+                    setImageFile(null);
+                    if (fileInputRef.current) fileInputRef.current.value = '';
+                  }}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.45rem',
+                    padding: '0.55rem 0.95rem',
+                    borderRadius: '8px',
+                    border: '1px solid #fecaca',
+                    background: '#fef2f2',
+                    color: '#dc2626',
+                    fontSize: '0.82rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.background = '#fee2e2'}
+                  onMouseLeave={e => e.currentTarget.style.background = '#fef2f2'}
+                  title="Delete this image"
+                >
+                  <Trash2 size={15} />
+                  <span>Remove Image</span>
+                </button>
               </div>
             ) : (
               <>
                 <Upload size={32} color="#94a3b8" style={{ marginBottom: '0.5rem' }} />
                 <p style={{ fontSize: '0.9rem', color: '#64748b', fontWeight: 600 }}>
-                  Click to upload product image
+                  Click to upload product image <span style={{ fontWeight: 400, color: '#94a3b8' }}>(Optional)</span>
                 </p>
                 <p style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.25rem' }}>
-                  JPG, PNG up to 5MB
+                  JPG, PNG up to 10MB • You can add products without an image
                 </p>
               </>
             )}

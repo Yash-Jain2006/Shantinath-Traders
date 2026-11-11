@@ -150,7 +150,7 @@ export default function ProductCatalog({ onGoToAllProducts }) {
                 {/* Product Image Header with Brand Badge */}
                 <div className="product-card__img-box">
                   <img 
-                    src={product.image || `/images/products/${product.id}.jpg`} 
+                    src={product.image || '/images/products/taparia-adj-spanner.jpg'} 
                     alt={product.name} 
                     loading="lazy" 
                     onError={(e) => {

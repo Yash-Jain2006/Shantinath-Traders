@@ -429,7 +429,7 @@ app.post('/api/admin/products', upload.single('image'), async (req, res) => {
       }
     }
 
-    let resolvedImage = req.body.image || '/images/products/taparia-adj-spanner.jpg';
+    let resolvedImage = req.body.image || '';
     if (req.file && req.file.buffer) {
       resolvedImage = `data:${req.file.mimetype || 'image/jpeg'};base64,${req.file.buffer.toString('base64')}`;
     }
@@ -517,8 +517,8 @@ app.put('/api/admin/products/:id', conditionalUpload, async (req, res) => {
     let resolvedImage = current.image || '';
     if (req.file && req.file.buffer) {
       resolvedImage = `data:${req.file.mimetype || 'image/jpeg'};base64,${req.file.buffer.toString('base64')}`;
-    } else if (req.body.image && typeof req.body.image === 'string' && req.body.image.trim()) {
-      resolvedImage = req.body.image.trim();
+    } else if (req.body.image !== undefined) {
+      resolvedImage = typeof req.body.image === 'string' ? req.body.image.trim() : '';
     }
 
     const updatedProduct = {
