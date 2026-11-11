@@ -846,13 +846,42 @@ function ProductForm({ mode, product, existingProducts = [], onSuccess }) {
     setForm(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleFileChange = (e) => {
+  const compressImage = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const maxWidth = 900;
+          let width = img.width;
+          let height = img.height;
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.82));
+        };
+        img.onerror = () => resolve(event.target.result);
+      };
+      reader.onerror = () => resolve(null);
+    });
+  };
+
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => setImagePreview(reader.result);
-      reader.readAsDataURL(file);
+      const compressed = await compressImage(file);
+      if (compressed) {
+        setImagePreview(compressed);
+      }
     }
   };
 
@@ -880,50 +909,29 @@ function ProductForm({ mode, product, existingProducts = [], onSuccess }) {
         : `${API_BASE}/admin/products/${product.id}`;
       const method = mode === 'add' ? 'POST' : 'PUT';
 
-      let res;
-      // Use JSON for edit-without-image (avoids Vercel multipart body parsing issues)
-      // Use FormData only when adding a product OR uploading a new image
-      if (imageFile || mode === 'add') {
-        const formData = new FormData();
-        formData.append('id', productId);
-        formData.append('name', form.name);
-        formData.append('brand', form.brand);
-        formData.append('category', form.category);
-        formData.append('sizes', form.sizes);
-        formData.append('variants', form.variants);
-        formData.append('material', form.material);
-        formData.append('finish', form.finish);
-        formData.append('features', JSON.stringify(parsedFeatures));
-        formData.append('suitableFor', form.suitableFor);
-        formData.append('inStock', form.inStock);
-        formData.append('featured', form.featured);
-        formData.append('imageSnippet', form.imageSnippet);
-        if (imageFile) formData.append('image', imageFile);
-        res = await fetch(url, { method, body: formData });
-      } else {
-        // JSON body — works reliably on Vercel serverless
-        res = await fetch(url, {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: productId,
-            name: form.name,
-            brand: form.brand,
-            category: form.category,
-            sizes: form.sizes,
-            variants: form.variants,
-            material: form.material,
-            finish: form.finish,
-            features: parsedFeatures,
-            suitableFor: form.suitableFor,
-            inStock: form.inStock,
-            featured: form.featured,
-            imageSnippet: form.imageSnippet,
-          }),
-        });
-      }
+      const payload = {
+        id: productId,
+        name: form.name,
+        brand: form.brand,
+        category: form.category,
+        sizes: form.sizes,
+        variants: form.variants,
+        material: form.material,
+        finish: form.finish,
+        features: parsedFeatures,
+        suitableFor: form.suitableFor,
+        inStock: form.inStock,
+        featured: form.featured,
+        imageSnippet: form.imageSnippet,
+        image: imagePreview || product?.image || '/images/products/taparia-adj-spanner.jpg'
+      };
 
-      const data = await res.json();
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
         setError(data.error || 'Something went wrong');

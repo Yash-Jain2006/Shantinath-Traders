@@ -25,27 +25,9 @@ const categoriesFilePath = path.join(__dirname, 'data', 'categories.json');
 const productsFilePath = path.join(__dirname, 'data', 'products.json');
 const inquiriesFilePath = path.join(__dirname, 'data', 'inquiries.json');
 
-// Multer storage for product images (local dev only)
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadDir = path.join(__dirname, '..', 'frontend', 'public', 'images', 'products');
-    try {
-      if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
-      cb(null, uploadDir);
-    } catch (e) {
-      // On Vercel, /tmp is writable
-      const tmpDir = '/tmp/product-images';
-      if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
-      cb(null, tmpDir);
-    }
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const name = req.body.id || `product-${Date.now()}`;
-    cb(null, `${name}${ext}`);
-  }
-});
-const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
+// Multer storage in-memory (works everywhere without read-only filesystem errors)
+const storage = multer.memoryStorage();
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 // Helper to read local JSON (dev fallback)
 function readJson(filePath) {
@@ -447,6 +429,11 @@ app.post('/api/admin/products', upload.single('image'), async (req, res) => {
       }
     }
 
+    let resolvedImage = req.body.image || '/images/products/taparia-adj-spanner.jpg';
+    if (req.file && req.file.buffer) {
+      resolvedImage = `data:${req.file.mimetype || 'image/jpeg'};base64,${req.file.buffer.toString('base64')}`;
+    }
+
     const newProduct = {
       id,
       name,
@@ -461,7 +448,7 @@ app.post('/api/admin/products', upload.single('image'), async (req, res) => {
       inStock: inStock === 'true' || inStock === true,
       featured: featured === 'true' || featured === true,
       imageSnippet: imageSnippet || '',
-      image: req.file ? `/images/products/${req.file.filename}` : '/images/products/taparia-adj-spanner.jpg'
+      image: resolvedImage
     };
 
     // Write to Supabase (primary)
@@ -527,6 +514,13 @@ app.put('/api/admin/products/:id', conditionalUpload, async (req, res) => {
       }
     }
 
+    let resolvedImage = current.image || '';
+    if (req.file && req.file.buffer) {
+      resolvedImage = `data:${req.file.mimetype || 'image/jpeg'};base64,${req.file.buffer.toString('base64')}`;
+    } else if (req.body.image && typeof req.body.image === 'string' && req.body.image.trim()) {
+      resolvedImage = req.body.image.trim();
+    }
+
     const updatedProduct = {
       id: requestedId,
       name: name || current.name,
@@ -541,7 +535,7 @@ app.put('/api/admin/products/:id', conditionalUpload, async (req, res) => {
       inStock: inStock !== undefined ? (inStock === 'true' || inStock === true) : current.in_stock,
       featured: featured !== undefined ? (featured === 'true' || featured === true) : current.featured,
       imageSnippet: imageSnippet !== undefined ? imageSnippet : (current.image_snippet || ''),
-      image: req.file ? `/images/products/${req.file.filename}` : (current.image || ''),
+      image: resolvedImage,
       hsnCode: current.hsn_code || '',
       mrp: current.mrp || null
     };
