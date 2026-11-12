@@ -907,10 +907,19 @@ function ProductForm({ mode, product, existingProducts = [], onSuccess }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      const data = await res.json().catch(() => ({}));
+      let data = {};
+      try {
+        data = await res.json();
+      } catch (parseErr) {
+        // Non-JSON response
+      }
 
       if (!res.ok) {
-        setError(data.error || 'Something went wrong');
+        if (res.status === 413) {
+          setError('Image file is too large. Please choose a smaller image (under 4MB).');
+        } else {
+          setError(data.error || `Server error (${res.status}). Please try again.`);
+        }
         setSubmitting(false);
         return;
       }

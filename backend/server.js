@@ -17,7 +17,8 @@ const IS_VERCEL = !!process.env.VERCEL || !!process.env.VERCEL_ENV;
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Data file paths (local dev only)
 const shopFilePath = path.join(__dirname, 'data', 'shop.json');
@@ -28,6 +29,16 @@ const inquiriesFilePath = path.join(__dirname, 'data', 'inquiries.json');
 // Multer storage in-memory (works everywhere without read-only filesystem errors)
 const storage = multer.memoryStorage();
 const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
+
+// Middleware that runs multer only when Content-Type is multipart/form-data
+const conditionalUpload = (req, res, next) => {
+  const ct = req.headers['content-type'] || '';
+  if (ct.includes('multipart/form-data')) {
+    upload.single('image')(req, res, next);
+  } else {
+    next();
+  }
+};
 
 // Helper to read local JSON (dev fallback)
 function readJson(filePath) {
@@ -390,7 +401,7 @@ app.use('/images', express.static(path.join(__dirname, '..', 'frontend', 'public
 // ─────────────────────────────────────────────────────────────────────────────
 
 // 10. Admin: Add New Product
-app.post('/api/admin/products', upload.single('image'), async (req, res) => {
+app.post('/api/admin/products', conditionalUpload, async (req, res) => {
   try {
     let { id, name, brand, category, sizes, variants, material, finish, features, suitableFor, inStock, featured, imageSnippet } = req.body;
 
@@ -472,15 +483,6 @@ app.post('/api/admin/products', upload.single('image'), async (req, res) => {
 
 // 11. Admin: Update Product
 // Accepts JSON (no image) or multipart/form-data (with image upload)
-// Using a middleware that runs multer only when Content-Type is multipart
-const conditionalUpload = (req, res, next) => {
-  const ct = req.headers['content-type'] || '';
-  if (ct.includes('multipart/form-data')) {
-    upload.single('image')(req, res, next);
-  } else {
-    next();
-  }
-};
 
 app.put('/api/admin/products/:id', conditionalUpload, async (req, res) => {
   try {
