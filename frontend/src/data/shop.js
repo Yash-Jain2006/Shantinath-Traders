@@ -1,12 +1,12 @@
 export const productCategories = [
-  { id: "all", name: "All Products", count: 49 },
-  { id: "hand-tools", name: "Hand Tools", count: 29 },
-  { id: "power-tools", name: "Machine & Power Tools", count: 5 },
-  { id: "paints", name: "Paints & Enamels", count: 5 },
-  { id: "locks", name: "Pad Locks", count: 3 },
-  { id: "adhesives", name: "Adhesives & Sprays", count: 3 },
-  { id: "garden", name: "Gardening & Pipes", count: 2 },
-  { id: "abrasives", name: "Pipe Fittings", count: 2 }
+  { id: "all", name: "All Products" },
+  { id: "hand-tools", name: "Hand Tools" },
+  { id: "power-tools", name: "Machine & Power Tools" },
+  { id: "paints", name: "Paints & Enamels" },
+  { id: "locks", name: "Pad Locks" },
+  { id: "adhesives", name: "Adhesives & Sprays" },
+  { id: "garden", name: "Gardening & Pipes" },
+  { id: "abrasives", name: "Pipe Fittings" }
 ];
 
 export const shopDetails = {
@@ -56,3 +56,53 @@ export const shopDetails = {
 };
 
 export default shopDetails;
+
+export const b2cShoppingSteps = [
+  {
+    step: 1,
+    title: "Browse or Call Ahead",
+    desc: "Explore our product catalog online or call our counter directly to check if what you need is in stock today."
+  },
+  {
+    step: 2,
+    title: "Tell Us Your Problem",
+    desc: "Walk in with a photo of your broken part, damaged area, or paint job. Our counter team will find the exact tool or material."
+  },
+  {
+    step: 3,
+    title: "Pick Up at Counter",
+    desc: "No waiting. Everything is on-shelf and ready. Walk in, pick your item, and walk out in minutes."
+  },
+  {
+    step: 4,
+    title: "WhatsApp for Quotes",
+    desc: "Need a price list or bulk quote? Message us on WhatsApp — we respond quickly with stock confirmation and pricing."
+  }
+];
+
+export const consumerProjectTypes = [
+  {
+    title: "Gate & Grill Painting",
+    desc: "Red oxide primer + enamel combo for iron gates, balcony grills, and window coolers that last through monsoon."
+  },
+  {
+    title: "Home Electrical Repairs",
+    desc: "Taparia screwdrivers, line testers, wire strippers, and pliers for switchboard, fan, and appliance fixes."
+  },
+  {
+    title: "Lock & Door Security",
+    desc: "Harrison and Godrej padlocks, aldrops, door bolts, and hinges for bedrooms, main gates, and storage rooms."
+  },
+  {
+    title: "Garden & Water Pipes",
+    desc: "Braided PVC hose pipes, brass spray guns, and GI wire netting for garden watering and balcony protection."
+  },
+  {
+    title: "Power Drilling & Fixing",
+    desc: "Bosch and Ingco drills for mounting TV brackets, curtain rods, shelves, and photo frames on RCC walls."
+  },
+  {
+    title: "Plumbing & Pipe Leaks",
+    desc: "M-Seal, Fevicol, Teflon tape, and pipe fittings to fix dripping taps and leaking joints without a plumber."
+  }
+];

@@ -73,7 +73,7 @@ export default function ProductsPage({ onBackToHome, initialCategory = 'all' }) 
     }
 
     return result;
-  }, [selectedCategory, selectedBrand, searchQuery, sortBy]);
+  }, [productList, selectedCategory, selectedBrand, searchQuery, sortBy]);
 
   return (
     <div className="products-page-wrapper">
@@ -176,7 +176,7 @@ export default function ProductsPage({ onBackToHome, initialCategory = 'all' }) 
         {/* Counter Info Strip */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '1rem 0 1.5rem', padding: '0 0.25rem' }}>
           <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
-            Showing <strong>{filteredProducts.length}</strong> verified products with photos
+            Showing <strong>{filteredProducts.length}</strong> verified products
           </span>
 
           {(selectedCategory !== 'all' || selectedBrand !== 'all' || searchQuery) && (

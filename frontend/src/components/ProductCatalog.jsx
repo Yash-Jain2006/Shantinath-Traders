@@ -56,7 +56,7 @@ export default function ProductCatalog({ onGoToAllProducts }) {
 
       return matchCat && matchBrand && matchSearch;
     });
-  }, [selectedCategory, selectedBrand, searchQuery]);
+  }, [productList, selectedCategory, selectedBrand, searchQuery]);
 
   return (
     <section id="products" className="section section--subtle">
@@ -90,7 +90,7 @@ export default function ProductCatalog({ onGoToAllProducts }) {
               onChange={(e) => setSelectedBrand(e.target.value)}
               className="brand-select"
             >
-              <option value="all">All Brands ({products.length} items)</option>
+              <option value="all">All Brands ({productList.length} items)</option>
               {uniqueBrands.filter(b => b !== 'all').map((b) => (
                 <option key={b} value={b}>{b}</option>
               ))}
