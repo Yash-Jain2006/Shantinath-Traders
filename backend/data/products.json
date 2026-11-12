@@ -839,6 +839,7 @@
     "brand": "Taparia",
     "category": "hand-tools",
     "sizes": "TAK 1.5 to TAK 10 (Metric 1.5 to 10mm) | Torx T10 to T50",
+    "variants": "",
     "material": "Alloy steel shaft with molded ergonomic cross-handle",
     "finish": "Satin chrome shaft with sky-blue comfort-grip handle",
     "features": [
@@ -849,8 +850,8 @@
     "suitableFor": "Two-wheeler workshops, motorcycle mechanics, CNC machine setup",
     "inStock": true,
     "featured": false,
-    "image": "/images/products/taparia-t-handle-hex-torx-keys.jpg",
     "imageSnippet": "Taparia T-handle blue hex key stand on mechanic counter.",
+    "image": "/images/products/taparia-t-handle-hex-torx-keys.jpg",
     "hsnCode": "82041120",
     "mrp": 974
   },
