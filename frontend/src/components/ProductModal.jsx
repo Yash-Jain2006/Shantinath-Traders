@@ -130,23 +130,6 @@ export default function ProductModal({ product, onClose }) {
           </div>
         </div>
 
-        <div style={{ marginBottom: '1.15rem' }}>
-          <h4 style={{ fontSize: '0.9rem', marginBottom: '0.45rem', color: 'var(--color-primary)' }}>
-            Why This Is Great for Your Home:
-          </h4>
-          <ul style={{ paddingLeft: '1.2rem', fontSize: '0.85rem', color: '#475569' }}>
-            {product.features?.map((f, i) => (
-              <li key={i} style={{ marginBottom: '0.3rem' }}>{f}</li>
-            ))}
-          </ul>
-        </div>
-
-        {product.suitableFor && (
-          <div style={{ marginBottom: '1.25rem', fontSize: '0.85rem', background: '#eff6ff', padding: '0.65rem 0.85rem', borderRadius: '8px', border: '1px solid #dbeafe' }}>
-            <strong style={{ color: '#1e40af' }}>Perfect For: </strong>
-            <span style={{ color: '#1e3a8a' }}>{product.suitableFor}</span>
-          </div>
-        )}
 
         <div style={{ display: 'flex', gap: '0.65rem', paddingTop: '0.85rem', borderTop: '1px solid #e2e8f0' }}>
           <a
